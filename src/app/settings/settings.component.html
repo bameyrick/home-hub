@@ -1,0 +1,38 @@
+<p *ngIf="!form">Loading ...</p>
+
+<form *ngIf="form" (submit)="submit()" [formGroup]="form">
+  <h1>Settings</h1>
+
+  <h1>MetOffice Credentials</h1>
+
+  <p>
+    <label>Client ID</label>
+    <input type="text" [formControlName]="'clientID'" [required]="true" />
+  </p>
+
+  <p>
+    <label>Client Secret</label>
+    <input type="password" [formControlName]="'clientSecret'" [required]="true" />
+  </p>
+
+  <h2>Weather Locations</h2>
+
+  <div cdkDropList (cdkDropListDropped)="dropLocation($event)">
+    <fieldset
+      home-hub-location
+      [label]="location.value?.name ?? 'Location ' + (index + 1)"
+      *ngFor="let location of form?.controls?.weatherLocations?.controls; let index = index"
+      [formControl]="location"
+      cdkDrag
+    >
+      <button type="button" (click)="removeLocation(index)" [disabled]="form.controls.weatherLocations.length === 1">Remove</button>
+    </fieldset>
+  </div>
+
+  <button type="button" (click)="addLocation()" [disabled]="this.form.disabled">Add location</button>
+
+  <button type="submit" [disabled]="form.invalid || this.form.disabled">Save</button>
+  {{ form.value | json }}
+  {{ form.errors | json }}
+  {{ form.disabled }}
+</form>

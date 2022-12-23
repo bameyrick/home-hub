@@ -1,0 +1,10 @@
+<p>Current weather</p>
+
+<p>Temperature: {{ (currentWeather$ | async)?.temperature | number : '1.0-0' }}°c</p>
+<p>Wind: {{ (currentWeather$ | async)?.windSpeed | number : '1.0-0' }}mph</p>
+<p>Wind Direction: {{ (currentWeather$ | async)?.windDirection }}</p>
+<p>Precipitation: {{ (currentWeather$ | async)?.precipitationProbability }}%</p>
+<p>Sunrise: {{ (currentWeather$ | async)?.sunrise | date : 'HH:mm' }}</p>
+<p>Sunset: {{ (currentWeather$ | async)?.sunset | date : 'HH:mm' }}</p>
+
+{{ currentWeather$ | async | json }}

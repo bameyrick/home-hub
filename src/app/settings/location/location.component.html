@@ -1,0 +1,33 @@
+<legend *ngIf="label">{{ label }}</legend>
+
+<p>
+  <label [htmlFor]="'latitude-' + id">Latitude</label>
+  <input
+    [attr.id]="'latitude-' + id"
+    type="number"
+    [ngModel]="(value$ | async)?.latitude"
+    (ngModelChange)="onLatitudeChange($event)"
+    [min]="'-90.000000'"
+    [max]="'90.000000'"
+    [required]="required"
+    [disabled]="disabled"
+  />
+</p>
+
+<p>
+  <label [htmlFor]="'longitude-' + id">Longitude</label>
+  <input
+    [attr.id]="'longitude-' + id"
+    type="number"
+    [ngModel]="(value$ | async)?.longitude"
+    (ngModelChange)="onLongitudeChange($event)"
+    [min]="'-180.000000'"
+    [max]="'180.000000'"
+    [required]="required"
+    [disabled]="disabled"
+  />
+</p>
+
+<button type="button" (click)="currentLocation()" [disabled]="disabled">Current Location</button>
+
+<ng-content></ng-content>
