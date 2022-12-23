@@ -31,7 +31,7 @@
 
   <button type="button" (click)="addLocation()" [disabled]="this.form.disabled">Add location</button>
 
-  <button type="submit" [disabled]="form.invalid || this.form.disabled">Save</button>
+  <button type="submit" [disabled]="form.invalid || this.form.disabled || (this.valueChanged$ | async) === false">Save</button>
   {{ form.value | json }}
   {{ form.errors | json }}
   {{ form.disabled }}

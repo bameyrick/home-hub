@@ -3,8 +3,9 @@ import { Component } from '@angular/core';
 import { FormArray, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { NullableLatLon, Settings } from '@home-hub/common';
 import { Store } from '@ngrx/store';
-import { isNullOrUndefined } from '@qntm-code/utils';
-import { skipWhile } from 'rxjs';
+import { isEqual, isNullOrUndefined } from '@qntm-code/utils';
+import { BehaviorSubject, skipWhile } from 'rxjs';
+import { ComponentAbstract } from '../abstracts';
 import { selectSettings, selectSettingsLoading, SettingsActions } from './store';
 import { uniqueValidator } from './validators';
 
@@ -19,30 +20,44 @@ interface SettingsForm {
   templateUrl: './settings.component.html',
   styleUrls: ['./settings.component.scss'],
 })
-export class SettingsComponent {
+export class SettingsComponent extends ComponentAbstract {
   public readonly loading$ = this.store.select(selectSettingsLoading);
 
   public form?: FormGroup<SettingsForm>;
 
+  private initialFormValue?: Settings;
+
+  public readonly valueChanged$ = new BehaviorSubject<boolean>(false);
+
   constructor(private readonly store: Store, private readonly formBuilder: FormBuilder) {
+    super();
+
     this.store.dispatch(SettingsActions.getSettings());
 
-    this.store
-      .select(selectSettings)
-      .pipe(skipWhile(settings => isNullOrUndefined(settings)))
-      .subscribe(settings => {
-        if (settings) {
-          this.form = this.formBuilder.group({
-            clientID: new FormControl<string | null>(settings.clientID),
-            clientSecret: new FormControl<string | null>(settings.clientSecret),
-            weatherLocations: this.formBuilder.array(settings.weatherLocations, uniqueValidator()),
-          });
+    this.subscriptions.add(
+      this.store
+        .select(selectSettings)
+        .pipe(skipWhile(settings => isNullOrUndefined(settings)))
+        .subscribe(settings => {
+          if (settings) {
+            this.form = this.formBuilder.group({
+              clientID: new FormControl<string | null>(settings.clientID),
+              clientSecret: new FormControl<string | null>(settings.clientSecret),
+              weatherLocations: this.formBuilder.array(settings.weatherLocations, uniqueValidator()),
+            });
 
-          this.form.controls.weatherLocations.controls.forEach(control => control.addValidators(Validators.required));
-        }
-      });
+            this.form.controls.weatherLocations.controls.forEach(control => control.addValidators(Validators.required));
 
-    this.loading$.subscribe(loading => (loading ? this.form?.disable() : this.form?.enable()));
+            this.initialFormValue = this.form.value as Settings;
+
+            this.subscriptions.add(
+              this.form.valueChanges.subscribe(value => this.valueChanged$.next(!isEqual(value, this.initialFormValue)))
+            );
+          }
+        })
+    );
+
+    this.subscriptions.add(this.loading$.subscribe(loading => (loading ? this.form?.disable() : this.form?.enable())));
   }
 
   public removeLocation(index: number): void {
