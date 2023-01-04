@@ -1,4 +1,4 @@
-import { Component, ElementRef } from '@angular/core';
+import { Component, ElementRef, ViewEncapsulation } from '@angular/core';
 import { ComponentAbstract } from '../abstracts';
 import { TimeService } from '../time/time.service';
 
@@ -6,6 +6,7 @@ import { TimeService } from '../time/time.service';
   selector: 'home-hub-home',
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.scss'],
+  encapsulation: ViewEncapsulation.None,
 })
 export class HomeComponent extends ComponentAbstract {
   constructor(elementRef: ElementRef, public readonly timeService: TimeService) {

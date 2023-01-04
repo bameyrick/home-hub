@@ -1,0 +1,7 @@
+@use 'sass:math';
+
+@function round-to-decimal-places($value, $decimal-places) {
+  $multiplier: math.pow(10, $decimal-places);
+
+  @return math.div(math.round($value * $multiplier), $multiplier);
+}

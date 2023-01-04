@@ -1,4 +1,4 @@
-import { Component, forwardRef } from '@angular/core';
+import { Component, forwardRef, ViewEncapsulation } from '@angular/core';
 import { AsyncValidator, NG_ASYNC_VALIDATORS, NG_VALUE_ACCESSOR, ValidationErrors } from '@angular/forms';
 import { NullableLatLon } from '@home-hub/common';
 import { isNullOrUndefined } from '@qntm-code/utils';
@@ -9,6 +9,7 @@ import { ControlAbstract } from '../../abstracts';
   selector: 'fieldset[home-hub-location]',
   templateUrl: './location.component.html',
   styleUrls: ['./location.component.scss'],
+  encapsulation: ViewEncapsulation.None,
   providers: [
     {
       provide: NG_VALUE_ACCESSOR,

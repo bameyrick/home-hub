@@ -1,0 +1,36 @@
+@import '../../../styles/variables-and-helpers';
+
+.Location {
+  padding: 2rem 1rem 1rem;
+  background: $colour-concrete;
+  border-radius: 0.5rem;
+
+  &__legend {
+    font-weight: bold;
+    position: relative;
+    top: 1.5rem;
+  }
+
+  &__fields {
+    display: flex;
+    margin: 0 -0.5rem;
+  }
+
+  &__field {
+    margin: 0 0.5rem;
+  }
+
+  &__current {
+  }
+
+  &__actions {
+    display: flex;
+    flex: 1 1 auto;
+    margin: 0 -0.25rem;
+    justify-content: flex-end;
+
+    > * {
+      margin: 0 0.25rem;
+    }
+  }
+}

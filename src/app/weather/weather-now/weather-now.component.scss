@@ -1,0 +1,42 @@
+@import '../../../styles/variables-and-helpers';
+
+.WeatherNow {
+  display: block;
+
+  &__grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  &__row:not(:last-of-type) & {
+    &__cell {
+      padding: 0 0 1rem;
+    }
+  }
+
+  &__label {
+    color: $colour-grey;
+    margin: 0;
+  }
+
+  &__icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 3em;
+    height: 3em;
+    border-radius: 50%;
+    background: $colour-concrete;
+    fill: $colour-concrete;
+    font-weight: bold;
+  }
+
+  &__compass {
+    width: 1.75em;
+    height: 1.75em;
+  }
+
+  &__wind {
+    width: 1.5em;
+  }
+}

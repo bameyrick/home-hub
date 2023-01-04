@@ -1,0 +1,50 @@
+/* stylelint-disable-next-line value-keyword-case */
+$font-family: Gilroy, -apple-system, 'Helvetica Neue', Helvetica, Arial, sans-serif;
+
+$base-font-size: 18px;
+$font-weight-light: 300;
+$font-weight-normal: 400;
+$font-weight-medium: 500;
+$font-weight-bold: 700;
+$font-weight-heavy: 800;
+
+$typography-spacing: 0.5rem;
+
+$type-matrix: (
+  fs-xxxxl: (
+    large: 56px,
+    small: 48px,
+  ),
+  fs-xxxl: (
+    large: 48px,
+    small: 32px,
+  ),
+  fs-xxl: (
+    large: 36px,
+    small: 28px,
+  ),
+  fs-xl: (
+    large: 30px,
+    small: 26px,
+  ),
+  fs-l: (
+    large: 26px,
+    small: 24px,
+  ),
+  fs-m: (
+    large: 22px,
+    small: 20px,
+  ),
+  fs-r: (
+    large: $base-font-size,
+    small: $base-font-size,
+  ),
+  fs-s: (
+    small: 14px,
+    large: 14px,
+  ),
+);
+
+@mixin font-size($name) {
+  @include type-matrix-font-size(map-get($type-matrix, $name), $base-font-size);
+}

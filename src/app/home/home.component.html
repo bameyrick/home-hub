@@ -1,3 +1,10 @@
 <home-hub-weather class="Home__weather"></home-hub-weather>
-<p>{{ timeService.now$ | async | date : 'EEE d LLL YYYY' }}</p>
-<p>{{ timeService.now$ | async | date : 'HH:mm:ss' }}</p>
+
+<div class="Home__right">
+  <div class="Home__clock">
+    <h2 class="Home__date">{{ timeService.now$ | async | date : 'EEE d LLL YYYY' }}</h2>
+    <h1 class="Home__time">{{ timeService.now$ | async | date : 'HH:mm:ss' }}</h1>
+  </div>
+
+  <a [routerLink]="AppRoute.Settings" [icon]="Icon.Settings" [iconClass]="'Home__settings'"></a>
+</div>

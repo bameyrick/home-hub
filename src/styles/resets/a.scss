@@ -1,0 +1,10 @@
+a {
+  @include link-reset;
+
+  border-radius: 0.2em;
+  color: $colour-blue;
+
+  &:hover {
+    text-decoration: underline;
+  }
+}

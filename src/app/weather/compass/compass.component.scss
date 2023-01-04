@@ -1,0 +1,26 @@
+.Compass {
+  &:host {
+    display: block;
+  }
+
+  &__svg {
+    width: 100%;
+    height: 100%;
+  }
+
+  &__fill {
+    fill: currentColor;
+
+    &--light {
+      opacity: 0.6;
+    }
+  }
+
+  &__outline {
+    fill: inherit;
+  }
+
+  &__dial {
+    transform-origin: center;
+  }
+}

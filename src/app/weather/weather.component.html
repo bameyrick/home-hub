@@ -8,22 +8,41 @@
 ></home-hub-weather-sky>
 
 <div class="Weather__card">
-  <p class="Weather__place">{{ (currentWeather$ | async)?.name }}</p>
+  <h2 class="Weather__place">{{ (currentWeather$ | async)?.name }}</h2>
 
   <home-hub-weather-icon
-    class="Weather__icon"
+    class="Weather__animated-icon"
     [weatherCode]="(currentWeather$ | async)?.weatherCode"
     [displayTime]="timeService.now$ | async"
     [sunrise]="(currentWeather$ | async)?.sunrise"
     [sunset]="(currentWeather$ | async)?.sunset"
   ></home-hub-weather-icon>
 
-  <p class="Weather__temperature">{{ (currentWeather$ | async)?.temperature | number : '1.0-0' }}°c</p>
+  <div class="Weather__summary">
+    <div class="Weather__summary-left">
+      <h3 class="Weather__temperature">{{ (currentWeather$ | async)?.temperature | number : '1.0-0' }}°</h3>
+      <h4 class="Weather__description">
+        {{
+          (currentWeather$ | async)?.weatherCode
+            | weatherDescription : (currentWeather$ | async)?.sunrise : (currentWeather$ | async)?.sunset : (timeService.now$ | async)
+        }}
+      </h4>
+    </div>
+    <table class="Weather__table">
+      <tr>
+        <td [icon]="Icon.Umbrella" [iconClass]="'Weather__icon'"></td>
+        <td>{{ (currentWeather$ | async)?.precipitationProbability }}%</td>
+      </tr>
+      <tr>
+        <td [icon]="Icon.Sunrise" [iconClass]="'Weather__icon'"></td>
+        <td>{{ (currentWeather$ | async)?.sunrise | date : 'HH:mm' }}</td>
+      </tr>
+      <tr>
+        <td [icon]="Icon.Sunset" [iconClass]="'Weather__icon'"></td>
+        <td>{{ (currentWeather$ | async)?.sunset | date : 'HH:mm' }}</td>
+      </tr>
+    </table>
+  </div>
 </div>
-<p>Wind: {{ (currentWeather$ | async)?.windSpeed | number : '1.0-0' }}mph</p>
-<p>Wind Direction: {{ (currentWeather$ | async)?.windDirection }}</p>
-<p>Precipitation: {{ (currentWeather$ | async)?.precipitationProbability }}%</p>
-<p>Sunrise: {{ (currentWeather$ | async)?.sunrise | date : 'HH:mm' }}</p>
-<p>Sunset: {{ (currentWeather$ | async)?.sunset | date : 'HH:mm' }}</p>
 
-{{ currentWeather$ | async | json }}
+<home-hub-weather-now class="Weather__now"></home-hub-weather-now>

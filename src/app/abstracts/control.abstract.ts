@@ -1,12 +1,16 @@
-import { AfterContentInit, Directive, Injector, Input, OnInit } from '@angular/core';
+import { AfterContentInit, Directive, ElementRef, Injector, Input, OnInit } from '@angular/core';
 import { ControlValueAccessor, NgControl, Validators } from '@angular/forms';
 import { isEqual } from '@qntm-code/utils';
 import { map, ReplaySubject } from 'rxjs';
 import { v4 as UUID } from 'uuid';
+import { ComponentAbstract } from './component.abstract';
 
 @Directive()
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
-export abstract class ControlAbstract<ValueType extends any | null | undefined> implements ControlValueAccessor, OnInit, AfterContentInit {
+export abstract class ControlAbstract<ValueType extends any | null | undefined>
+  extends ComponentAbstract
+  implements ControlValueAccessor, OnInit, AfterContentInit
+{
   @Input() public id: string = UUID();
 
   @Input() public label?: string;
@@ -45,7 +49,9 @@ export abstract class ControlAbstract<ValueType extends any | null | undefined> 
 
   protected control?: NgControl | null;
 
-  constructor(private readonly injector: Injector) {}
+  constructor(elementRef: ElementRef, private readonly injector: Injector) {
+    super(elementRef);
+  }
 
   public ngOnInit(): void {
     this.control = this.injector.get<NgControl | null>(NgControl, null);

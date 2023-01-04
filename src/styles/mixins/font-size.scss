@@ -1,0 +1,10 @@
+@use 'sass:map';
+
+@mixin type-matrix-font-size($props, $base) {
+  $small-size: map.get($props, small);
+  $large-size: map.get($props, large);
+
+  font-size: rems($small-size, $base);
+  font-weight: map.get($props, weight);
+  line-height: map.get($props, line-height);
+}

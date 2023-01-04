@@ -1,10 +1,12 @@
 import { Directive, ElementRef, OnDestroy } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { AppRoute } from '../../models';
+import { Icon } from '../enums';
 
 @Directive()
 export abstract class ComponentAbstract implements OnDestroy {
   public readonly AppRoute = AppRoute;
+  public readonly Icon = Icon;
 
   protected readonly subscriptions = new Subscription();
 

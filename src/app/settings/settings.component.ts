@@ -1,5 +1,5 @@
 import { CdkDragDrop } from '@angular/cdk/drag-drop';
-import { Component, ElementRef } from '@angular/core';
+import { Component, ElementRef, ViewEncapsulation } from '@angular/core';
 import { FormArray, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { NullableLatLon, Settings } from '@home-hub/common';
 import { Store } from '@ngrx/store';
@@ -19,6 +19,7 @@ interface SettingsForm {
   selector: 'home-hub-settings',
   templateUrl: './settings.component.html',
   styleUrls: ['./settings.component.scss'],
+  encapsulation: ViewEncapsulation.None,
 })
 export class SettingsComponent extends ComponentAbstract {
   public readonly loading$ = this.store.select(selectSettingsLoading);

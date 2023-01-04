@@ -1,38 +1,51 @@
+<header class="Settings__header">
+  <a [routerLink]="AppRoute.Root" [icon]="Icon.Clock" [iconClass]="'Settings__home'"></a>
+  <h1 class="Settings__title">Settings</h1>
+</header>
+
 <p *ngIf="!form">Loading ...</p>
 
 <form *ngIf="form" (submit)="submit()" [formGroup]="form">
-  <h1>Settings</h1>
+  <section class="Settings__section">
+    <h2>MetOffice Credentials</h2>
 
-  <h1>MetOffice Credentials</h1>
+    <p>
+      <label>Client ID</label>
+      <input type="text" [formControlName]="'clientID'" [required]="true" />
+    </p>
 
-  <p>
-    <label>Client ID</label>
-    <input type="text" [formControlName]="'clientID'" [required]="true" />
-  </p>
+    <p>
+      <label>Client Secret</label>
+      <input type="password" [formControlName]="'clientSecret'" [required]="true" />
+    </p>
+  </section>
 
-  <p>
-    <label>Client Secret</label>
-    <input type="password" [formControlName]="'clientSecret'" [required]="true" />
-  </p>
+  <section class="Settings__section">
+    <h2>Weather Locations</h2>
 
-  <h2>Weather Locations</h2>
+    <div cdkDropList (cdkDropListDropped)="dropLocation($event)">
+      <fieldset
+        class="Settings__location"
+        home-hub-location
+        [label]="location.value?.name ?? 'Location ' + (index + 1)"
+        *ngFor="let location of form?.controls?.weatherLocations?.controls; let index = index"
+        [formControl]="location"
+        cdkDrag
+      >
+        <button type="button" (click)="removeLocation(index)" [disabled]="form.controls.weatherLocations.length === 1">Remove</button>
+      </fieldset>
+    </div>
 
-  <div cdkDropList (cdkDropListDropped)="dropLocation($event)">
-    <fieldset
-      home-hub-location
-      [label]="location.value?.name ?? 'Location ' + (index + 1)"
-      *ngFor="let location of form?.controls?.weatherLocations?.controls; let index = index"
-      [formControl]="location"
-      cdkDrag
+    <button type="button" (click)="addLocation()" [disabled]="this.form.disabled">Add location</button>
+  </section>
+
+  <footer class="Settings__actions">
+    <button
+      class="Settings__action"
+      type="submit"
+      [disabled]="form.invalid || this.form.disabled || (this.valueChanged$ | async) === false"
     >
-      <button type="button" (click)="removeLocation(index)" [disabled]="form.controls.weatherLocations.length === 1">Remove</button>
-    </fieldset>
-  </div>
-
-  <button type="button" (click)="addLocation()" [disabled]="this.form.disabled">Add location</button>
-
-  <button type="submit" [disabled]="form.invalid || this.form.disabled || (this.valueChanged$ | async) === false">Save</button>
-  {{ form.value | json }}
-  {{ form.errors | json }}
-  {{ form.disabled }}
+      Save
+    </button>
+  </footer>
 </form>

@@ -1,4 +1,4 @@
-import { Component, ElementRef } from '@angular/core';
+import { Component, ElementRef, ViewEncapsulation } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { isNullOrUndefined } from '@qntm-code/utils';
 import { combineLatest, filter, map } from 'rxjs';
@@ -10,6 +10,7 @@ import { selectCurrentWeather } from './store';
   selector: 'home-hub-weather',
   templateUrl: './weather.component.html',
   styleUrls: ['./weather.component.scss'],
+  encapsulation: ViewEncapsulation.None,
 })
 export class WeatherComponent extends ComponentAbstract {
   public readonly currentWeather$ = this.store.select(selectCurrentWeather);

@@ -1,0 +1,13 @@
+@mixin link-reset {
+  color: inherit;
+  text-decoration: none;
+
+  &:active,
+  &:focus {
+    outline: none;
+  }
+
+  &:focus-visible {
+    @include focus-outline;
+  }
+}

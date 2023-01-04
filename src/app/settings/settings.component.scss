@@ -13,3 +13,41 @@
 .cdk-drop-list-dragging fieldset:not(.cdk-drag-placeholder) {
   transition: transform 250ms cubic-bezier(0, 0, 0.2, 1);
 }
+
+@import '../../styles/variables-and-helpers';
+
+.Settings {
+  display: block;
+  padding: $page-padding;
+
+  &__header {
+    display: flex;
+    align-items: center;
+  }
+
+  &__title {
+    margin: 0;
+  }
+
+  &__home {
+    width: 1rem;
+    height: 1rem;
+    margin: 0 0.5rem 0 0;
+    color: $colour-grey;
+  }
+
+  &__section {
+    padding: $page-padding 0 0;
+    border-top: 1px solid $colour-grey;
+    margin: $page-padding 0 0;
+  }
+
+  &__location {
+    margin: 0 0 $page-padding;
+  }
+
+  &__actions {
+    display: flex;
+    justify-content: flex-end;
+  }
+}
