@@ -2,7 +2,7 @@
 
 .Location {
   padding: 2rem 1rem 1rem;
-  background: $colour-concrete;
+  background: $colour-alabaster;
   border-radius: 0.5rem;
 
   &__legend {
@@ -14,6 +14,7 @@
   &__fields {
     display: flex;
     margin: 0 -0.5rem;
+    align-items: flex-end;
   }
 
   &__field {
