@@ -15,5 +15,10 @@ export const selectCurrentWeather = createSelector(selectWeatherLocations, locat
     ...hour,
     sunrise: today?.sunrise,
     sunset: today?.sunset,
+    noon: today?.noon,
+    twilightBegin: today?.twilightBegin,
+    twilightEnd: today?.twilightEnd,
+    updated: location?.modelRunDate,
+    name: location?.locationName,
   };
 });

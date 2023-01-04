@@ -18,7 +18,14 @@ import { ROOT_REDUCERS, RoutingModule } from './routing';
     BrowserModule,
     BaseModule,
     StoreRouterConnectingModule.forRoot(),
-    StoreModule.forRoot(ROOT_REDUCERS),
+    StoreModule.forRoot(ROOT_REDUCERS, {
+      // runtimeChecks: {
+      //   strictStateSerializability: false,
+      //   strictActionSerializability: false,
+      //   // strictActionWithinNgZone: false,
+      //   strictActionTypeUniqueness: true,
+      // },
+    }),
     StoreDevtoolsModule.instrument({
       name: 'ngrx Send Partners App',
       logOnly: environment.production,

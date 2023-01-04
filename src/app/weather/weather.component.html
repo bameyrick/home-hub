@@ -1,6 +1,25 @@
-<p>Current weather</p>
+<home-hub-weather-sky
+  class="Weather__sky"
+  [twilightBegin]="(currentWeather$ | async)?.twilightBegin"
+  [sunrise]="(currentWeather$ | async)?.sunrise"
+  [noon]="(currentWeather$ | async)?.noon"
+  [sunset]="(currentWeather$ | async)?.sunset"
+  [twilightEnd]="(currentWeather$ | async)?.twilightEnd"
+></home-hub-weather-sky>
 
-<p>Temperature: {{ (currentWeather$ | async)?.temperature | number : '1.0-0' }}°c</p>
+<div class="Weather__card">
+  <p class="Weather__place">{{ (currentWeather$ | async)?.name }}</p>
+
+  <home-hub-weather-icon
+    class="Weather__icon"
+    [weatherCode]="(currentWeather$ | async)?.weatherCode"
+    [displayTime]="timeService.now$ | async"
+    [sunrise]="(currentWeather$ | async)?.sunrise"
+    [sunset]="(currentWeather$ | async)?.sunset"
+  ></home-hub-weather-icon>
+
+  <p class="Weather__temperature">{{ (currentWeather$ | async)?.temperature | number : '1.0-0' }}°c</p>
+</div>
 <p>Wind: {{ (currentWeather$ | async)?.windSpeed | number : '1.0-0' }}mph</p>
 <p>Wind Direction: {{ (currentWeather$ | async)?.windDirection }}</p>
 <p>Precipitation: {{ (currentWeather$ | async)?.precipitationProbability }}%</p>

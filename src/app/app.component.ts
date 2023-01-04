@@ -6,6 +6,4 @@ import { ComponentAbstract } from './abstracts';
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss'],
 })
-export class AppComponent extends ComponentAbstract {
-  title = 'home-hub';
-}
+export class AppComponent extends ComponentAbstract {}

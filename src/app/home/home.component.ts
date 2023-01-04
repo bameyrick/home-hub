@@ -1,4 +1,5 @@
-import { Component } from '@angular/core';
+import { Component, ElementRef } from '@angular/core';
+import { ComponentAbstract } from '../abstracts';
 import { TimeService } from '../time/time.service';
 
 @Component({
@@ -6,6 +7,8 @@ import { TimeService } from '../time/time.service';
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.scss'],
 })
-export class HomeComponent {
-  constructor(public readonly timeService: TimeService) {}
+export class HomeComponent extends ComponentAbstract {
+  constructor(elementRef: ElementRef, public readonly timeService: TimeService) {
+    super(elementRef);
+  }
 }

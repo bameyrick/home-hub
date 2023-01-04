@@ -127,7 +127,7 @@ export class WeatherService {
   private mapDailyForcasts(daily: MetOfficeFeature, sunriseSunsets: Array<SunriseSunset>): Array<ForecastedDay> {
     return (daily.properties.timeSeries as MetOfficeDailyTimeSeriesItem[]).map((day, index) => {
       const date = new Date(day.time);
-      const { sunrise, sunset } = sunriseSunsets[index];
+      const { sunset } = sunriseSunsets[index];
 
       return {
         date,
@@ -136,8 +136,7 @@ export class WeatherService {
         uvIndex: day.maxUvIndex,
         weatherCode:
           getStartOfDay(date) === getStartOfDay() && new Date() > sunset ? day.nightSignificantWeatherCode : day.daySignificantWeatherCode,
-        sunrise,
-        sunset,
+        ...sunriseSunsets[index],
       };
     });
   }
@@ -184,6 +183,9 @@ export class WeatherService {
         map(({ data }) => ({
           sunrise: new Date(data.results.sunrise),
           sunset: new Date(data.results.sunset),
+          twilightBegin: new Date(data.results.astronomical_twilight_begin),
+          twilightEnd: new Date(data.results.astronomical_twilight_end),
+          noon: new Date(data.results.solar_noon),
         }))
       );
   }

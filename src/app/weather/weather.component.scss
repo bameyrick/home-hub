@@ -1,0 +1,28 @@
+.Weather {
+  &:host {
+    position: relative;
+  }
+
+  &__sky {
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+  }
+
+  &__card {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    position: relative;
+    height: 100vh;
+    color: #fff;
+  }
+
+  &__icon {
+    position: relative;
+    align-self: center;
+    width: 80%;
+  }
+}

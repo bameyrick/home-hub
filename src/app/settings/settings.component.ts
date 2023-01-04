@@ -1,5 +1,5 @@
 import { CdkDragDrop } from '@angular/cdk/drag-drop';
-import { Component } from '@angular/core';
+import { Component, ElementRef } from '@angular/core';
 import { FormArray, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { NullableLatLon, Settings } from '@home-hub/common';
 import { Store } from '@ngrx/store';
@@ -29,8 +29,8 @@ export class SettingsComponent extends ComponentAbstract {
 
   public readonly valueChanged$ = new BehaviorSubject<boolean>(false);
 
-  constructor(private readonly store: Store, private readonly formBuilder: FormBuilder) {
-    super();
+  constructor(elementRef: ElementRef, private readonly store: Store, private readonly formBuilder: FormBuilder) {
+    super(elementRef);
 
     this.store.dispatch(SettingsActions.getSettings());
 

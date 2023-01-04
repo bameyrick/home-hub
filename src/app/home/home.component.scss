@@ -1,0 +1,11 @@
+.Home {
+  &:host {
+    display: flex;
+  }
+
+  &__weather {
+    width: 60%;
+    height: 100vh;
+    overflow: auto;
+  }
+}

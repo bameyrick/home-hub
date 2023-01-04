@@ -1,0 +1,33 @@
+.WeatherSky {
+  &:host {
+    background: #111;
+  }
+
+  &__day,
+  &__night,
+  &__sunrise {
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+  }
+
+  &__day {
+    background: -webkit-linear-gradient(
+      bottom,
+      rgba(249, 251, 240, 1) 10%,
+      rgba(215, 253, 254, 1) 20%,
+      rgba(167, 222, 253, 1) 40%,
+      rgba(110, 175, 255, 1) 100%
+    );
+  }
+
+  &__sunrise {
+    background: -webkit-linear-gradient(bottom, rgba(212, 87, 43, 0.9) 0%, rgba(246, 149, 52, 0.8) 20%, rgba(24, 75, 106, 0) 100%);
+  }
+
+  &__night {
+    background: -webkit-linear-gradient(bottom, rgba(57, 167, 255, 0.2) 0%, rgba(13, 98, 245, 0.2) 20%, rgba(0, 11, 22, 0.1) 60%);
+  }
+}
