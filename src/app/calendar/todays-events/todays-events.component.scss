@@ -1,0 +1,45 @@
+@import '../../../styles/variables-and-helpers';
+
+.TodaysEvents {
+  &__event {
+    margin: 0 0 1em;
+  }
+
+  &__no-events {
+    color: $colour-text-secondary;
+  }
+}
+
+.Event {
+  padding: 1em;
+  border-left: 1em solid $colour-red;
+  border-radius: 0.5em;
+  background: $colour-alabaster;
+  box-shadow: 0 5px 5px -3px rgba(0, 0, 0, 0.2), 0 8px 10px 1px rgba(0, 0, 0, 0.14), 0 3px 14px 2px rgba(0, 0, 0, 0.12);
+
+  &__title {
+    @include font-size('fs-l');
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden;
+  }
+
+  &__times {
+    color: $colour-text-secondary;
+  }
+
+  &__location,
+  &__travel-time {
+    font-size: 0.8em;
+    color: $colour-text-ternary;
+
+    p {
+      margin: 0 0 0.15em;
+    }
+  }
+
+  &__travel-time {
+    margin: 0.5em 0 0;
+    color: $colour-text-secondary;
+  }
+}

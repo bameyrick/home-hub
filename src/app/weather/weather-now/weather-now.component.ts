@@ -1,7 +1,7 @@
-import { Component, ElementRef, ViewEncapsulation } from '@angular/core';
-import { Store } from '@ngrx/store';
+import { Component, Input, ViewEncapsulation } from '@angular/core';
+import { Observable } from 'rxjs';
 import { ComponentAbstract } from '../../abstracts';
-import { selectCurrentWeather } from '../store';
+import { CurrentWeather } from '../models';
 
 @Component({
   selector: 'home-hub-weather-now',
@@ -10,9 +10,5 @@ import { selectCurrentWeather } from '../store';
   encapsulation: ViewEncapsulation.None,
 })
 export class WeatherNowComponent extends ComponentAbstract {
-  public readonly currentWeather$ = this.store.select(selectCurrentWeather);
-
-  constructor(elementRef: ElementRef, private readonly store: Store) {
-    super(elementRef);
-  }
+  @Input() public currentWeather$?: Observable<CurrentWeather | undefined>;
 }

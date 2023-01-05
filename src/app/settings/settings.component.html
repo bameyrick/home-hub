@@ -39,6 +39,20 @@
     <button type="button" (click)="addLocation()" [disabled]="this.form.disabled">Add location</button>
   </section>
 
+  <section class="Settings__section">
+    <h2>CalDav Credentials</h2>
+
+    <p>
+      <label>Username</label>
+      <input type="text" [formControlName]="'caldavEmail'" [required]="true" />
+    </p>
+
+    <p>
+      <label>Password</label>
+      <input type="password" [formControlName]="'caldavPassword'" [required]="true" />
+    </p>
+  </section>
+
   <footer class="Settings__actions">
     <button
       class="Settings__action"

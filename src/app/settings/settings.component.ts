@@ -13,6 +13,8 @@ interface SettingsForm {
   weatherLocations: FormArray<FormControl<NullableLatLon | null>>;
   clientID: FormControl<string | null>;
   clientSecret: FormControl<string | null>;
+  caldavEmail: FormControl<string | null>;
+  caldavPassword: FormControl<string | null>;
 }
 
 @Component({
@@ -45,6 +47,8 @@ export class SettingsComponent extends ComponentAbstract {
               clientID: new FormControl<string | null>(settings.clientID),
               clientSecret: new FormControl<string | null>(settings.clientSecret),
               weatherLocations: this.formBuilder.array(settings.weatherLocations, uniqueValidator()),
+              caldavEmail: new FormControl<string | null>(settings.caldavEmail),
+              caldavPassword: new FormControl<string | null>(settings.caldavPassword),
             });
 
             this.form.controls.weatherLocations.controls.forEach(control => control.addValidators(Validators.required));

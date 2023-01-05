@@ -3,21 +3,23 @@
 .Home {
   display: flex;
 
-  &__weather {
-    width: 50%;
+  &__weather,
+  &__right {
+    flex: 1 0 auto;
+    width: 50vw;
     height: 100vh;
     overflow: auto;
   }
 
   &__right {
-    height: 100vh;
     padding: $page-padding;
-    overflow: auto;
-    text-align: right;
+  }
+
+  &__today {
+    min-height: 100vh;
   }
 
   &__clock {
-    height: 100vh;
     text-align: center;
     font-variant-numeric: tabular-nums;
   }
@@ -29,6 +31,10 @@
 
   &__time {
     font-size: 85px;
+  }
+
+  &__footer {
+    text-align: right;
   }
 
   &__settings {

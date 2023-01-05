@@ -9,10 +9,14 @@ export class SettingsService {
 
   public async getSettings(): Promise<Settings> {
     const credentials = await firstValueFrom(this.db.metOfficeCredentials$);
+    const caldavCredentials = await firstValueFrom(this.db.caldavCredentials$);
+
     return {
       weatherLocations: await firstValueFrom(this.db.weatherLocations$),
       clientID: credentials?.clientID ?? '',
       clientSecret: credentials?.clientSecret ?? '',
+      caldavEmail: caldavCredentials?.caldavEmail ?? '',
+      caldavPassword: caldavCredentials?.caldavPassword ?? '',
     };
   }
 
@@ -22,6 +26,11 @@ export class SettingsService {
     this.db.metOfficeCredentials$.next({
       clientID: settings.clientID,
       clientSecret: settings.clientSecret,
+    });
+
+    this.db.caldavCredentials$.next({
+      caldavEmail: settings.caldavEmail,
+      caldavPassword: settings.caldavPassword,
     });
 
     return this.getSettings();

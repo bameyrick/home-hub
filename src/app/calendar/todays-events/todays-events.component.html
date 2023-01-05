@@ -1,0 +1,22 @@
+<div class="TodaysEvents__event Event" *ngFor="let event of events$ | async; trackBy: trackBy">
+  <h1 class="Event__title">
+    {{ event.summary }}
+  </h1>
+
+  <ng-container *ngIf="event.allDay; else times">
+    <p class="Event__times">All Day</p>
+  </ng-container>
+
+  <ng-template #times>
+    <p class="Event__times">{{ event.start | date : event.startTimeFormat }} – {{ event.end | date : event.endTimeFormat }}</p>
+  </ng-template>
+
+  <div class="Event__location" *ngIf="event.location" [innerHTML]="event.location | toParagraphs"></div>
+
+  <div *ngIf="event.travelTime" class="Event__travel-time">
+    <p>Travel time: {{ event.travelTime | milliseconds }}</p>
+    <p>Leave at: {{ event.leaveAt | date : 'HH:mm' }}</p>
+  </div>
+</div>
+
+<p *ngIf="!(events$ | async)?.length" class="TodaysEvents__no-events">No events today</p>
