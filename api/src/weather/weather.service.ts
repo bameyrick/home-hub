@@ -1,4 +1,4 @@
-import { ForecastedDay, ForecastedHour, ForecastLocation, LatLon, MetOfficeCredentials, SunriseSunset } from '@home-hub/common';
+import { ForecastedHour, ForecastLocation, LatLon, MetOfficeCredentials, SunriseSunset } from '@home-hub/common';
 import { HttpService } from '@nestjs/axios';
 import { Injectable, Logger } from '@nestjs/common';
 import { convertTimeUnit, getStartOfDay, isEmpty, isEqual, isNullOrUndefined, TimeUnit } from '@qntm-code/utils';
@@ -19,7 +19,7 @@ import {
   timer,
 } from 'rxjs';
 import { DatabasePersistenceService } from '../database/database.service';
-import { MetOfficeDailyTimeSeriesItem, MetOfficeFeature, MetOfficeHourlyTimeSeriesItem, MetOfficeResponse } from './models';
+import { MetOfficeFeature, MetOfficeHourlyTimeSeriesItem, MetOfficeResponse } from './models';
 
 @Injectable()
 export class WeatherService {
@@ -27,7 +27,7 @@ export class WeatherService {
   private readonly params = '?latitude={lat}&longitude={lng}&includeLocationName=true&excludeParameterMetadata=true';
 
   private readonly hourlyForecastURL = `${this.baseUrl}/hourly${this.params}`;
-  private readonly dailyForecastURL = `${this.baseUrl}/daily${this.params}`;
+  private readonly threeHourlyForecastURL = `${this.baseUrl}/three-hourly${this.params}`;
 
   /**
    * The update interval in hours
@@ -86,14 +86,18 @@ export class WeatherService {
 
   private getForcastsForLocation(location: LatLon, credentials: MetOfficeCredentials): Observable<ForecastLocation> {
     const hourly = this.getForecast(this.hourlyForecastURL, location, credentials);
-    const daily = this.getForecast(this.dailyForecastURL, location, credentials);
+    const threeHourly = this.getForecast(this.threeHourlyForecastURL, location, credentials);
 
-    return forkJoin([hourly, daily]).pipe(
-      switchMap(([hourly, daily]) =>
+    return forkJoin([hourly, threeHourly]).pipe(
+      switchMap(([hourly, threeHourly]) =>
         forkJoin(
-          (daily.properties.timeSeries as MetOfficeDailyTimeSeriesItem[]).map(day =>
-            this.getSunriseSunsetForLocation(location, new Date(day.time))
-          )
+          Array.from(
+            new Set(
+              [...hourly.properties.timeSeries, ...threeHourly.properties.timeSeries].map(hour =>
+                getStartOfDay(new Date(hour.time)).toISOString()
+              )
+            )
+          ).map(time => this.getSunriseSunsetForLocation(location, new Date(time)))
         ).pipe(
           map(sunriseSunsets => ({
             location,
@@ -101,42 +105,37 @@ export class WeatherService {
             locationName: hourly.properties.location.name,
             requestedPointDistance: hourly.properties.requestPointDistance,
             modelRunDate: new Date(hourly.properties.modelRunDate),
-            hourly: this.mapHourlyForcasts(hourly),
-            daily: this.mapDailyForcasts(daily, sunriseSunsets),
+            hourly: this.mapHourlyForcasts(hourly, sunriseSunsets),
+            threeHourly: this.mapHourlyForcasts(threeHourly, sunriseSunsets),
           }))
         )
       )
     );
   }
 
-  private mapHourlyForcasts(hourly: MetOfficeFeature): Array<ForecastedHour> {
-    return (hourly.properties.timeSeries as MetOfficeHourlyTimeSeriesItem[]).map(hour => ({
-      time: new Date(hour.time),
-      temperature: hour.screenTemperature,
-      feelsLikeTemperature: hour.feelsLikeTemperature,
-      windSpeed: hour.windSpeed10m,
-      windGust: hour.windGustSpeed10m,
-      windDirection: hour.windDirectionFrom10m,
-      uvIndex: hour.uvIndex,
-      weatherCode: hour.significantWeatherCode,
-      precipitationProbability: hour.probOfPrecipitation,
-      humidity: hour.screenRelativeHumidity,
-    }));
-  }
+  private mapHourlyForcasts(hourly: MetOfficeFeature, sunriseSunsets: SunriseSunset[]): Array<ForecastedHour> {
+    return (hourly.properties.timeSeries as MetOfficeHourlyTimeSeriesItem[]).map(hour => {
+      const sunriseSunset = sunriseSunsets.find(
+        sunriseSunset => getStartOfDay(sunriseSunset.sunrise).getTime() === getStartOfDay(new Date(hour.time)).getTime()
+      );
 
-  private mapDailyForcasts(daily: MetOfficeFeature, sunriseSunsets: Array<SunriseSunset>): Array<ForecastedDay> {
-    return (daily.properties.timeSeries as MetOfficeDailyTimeSeriesItem[]).map((day, index) => {
-      const date = new Date(day.time);
-      const { sunset } = sunriseSunsets[index];
+      if (!sunriseSunset) {
+        throw new Error(`Could not find sunrise/sunset for hour: ${hour.time}`);
+      }
 
       return {
-        date,
-        dayMaximumTemperature: day.dayMaxScreenTemperature,
-        nightMinimumTemperature: day.nightMinScreenTemperature,
-        uvIndex: day.maxUvIndex,
-        weatherCode:
-          getStartOfDay(date) === getStartOfDay() && new Date() > sunset ? day.nightSignificantWeatherCode : day.daySignificantWeatherCode,
-        ...sunriseSunsets[index],
+        time: new Date(hour.time),
+        temperature: hour.screenTemperature || (hour.minScreenAirTemp + hour.maxScreenAirTemp) / 2,
+        // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+        feelsLikeTemperature: (hour.feelsLikeTemperature || hour.feelsLikeTemp)!,
+        windSpeed: hour.windSpeed10m,
+        windGust: hour.windGustSpeed10m,
+        windDirection: hour.windDirectionFrom10m,
+        uvIndex: hour.uvIndex,
+        weatherCode: hour.significantWeatherCode,
+        precipitationProbability: hour.probOfPrecipitation,
+        humidity: hour.screenRelativeHumidity,
+        ...sunriseSunset,
       };
     });
   }

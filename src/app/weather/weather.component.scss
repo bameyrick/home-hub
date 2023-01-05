@@ -19,6 +19,7 @@
     height: 100vh;
     color: #fff;
     padding: $page-padding;
+    text-shadow: 0 1px 5px rgba(0, 0, 0, 0.3);
   }
 
   &__animated-icon {
@@ -57,5 +58,6 @@
 
   &__icon {
     margin: 0 0.25em 0 0;
+    filter: drop-shadow(0 1px 3px rgb(0 0 0 / 0.3));
   }
 }

@@ -1,4 +1,4 @@
-import { Component, ElementRef, Input, OnChanges, SimpleChanges } from '@angular/core';
+import { Component, ElementRef, Input, OnChanges, SimpleChanges, ViewEncapsulation } from '@angular/core';
 import { isNullOrUndefined } from '@qntm-code/utils';
 import { AnimatedWeatherIcon, AnimatedWeatherTimes, AnimatedWeatherTypes } from 'animated-weather-icon';
 
@@ -6,6 +6,7 @@ import { AnimatedWeatherIcon, AnimatedWeatherTimes, AnimatedWeatherTypes } from 
   selector: 'home-hub-weather-icon',
   template: ``,
   styleUrls: ['./weather-icon.component.scss'],
+  encapsulation: ViewEncapsulation.None,
 })
 export class WeatherIconComponent implements OnChanges {
   @Input() public weatherCode?: number;

@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { AppRoute } from '../../models';
+import { WeatherForecastsComponent } from '../weather/weather-forecasts/weather-forecasts.component';
 
 const routes: Routes = [
   {
@@ -8,13 +9,15 @@ const routes: Routes = [
     children: [
       {
         path: AppRoute.Root,
-        loadChildren: () =>
-          import('../home/home.module').then((m) => m.HomeModule),
+        loadChildren: () => import('../home/home.module').then(m => m.HomeModule),
       },
       {
         path: AppRoute.Settings,
-        loadChildren: () =>
-          import('../settings/settings.module').then((m) => m.SettingsModule),
+        loadChildren: () => import('../settings/settings.module').then(m => m.SettingsModule),
+      },
+      {
+        path: AppRoute.Forecasts,
+        component: WeatherForecastsComponent,
       },
       {
         path: '**',

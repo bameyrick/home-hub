@@ -1,7 +1,6 @@
 import { Logger } from '@nestjs/common';
-import { OnGatewayConnection, OnGatewayDisconnect, WebSocketGateway, WebSocketServer } from '@nestjs/websockets';
+import { OnGatewayConnection, OnGatewayDisconnect, WebSocketGateway } from '@nestjs/websockets';
 import { isEqual } from '@qntm-code/utils';
-import { Server } from 'http';
 import { distinctUntilChanged, Observable, Subscription } from 'rxjs';
 import { Socket } from 'socket.io';
 import { CalDavService } from '../caldav/caldav.service';
@@ -13,15 +12,9 @@ import { WeatherService } from '../weather/weather.service';
   },
 })
 export class SocketGateway implements OnGatewayConnection, OnGatewayDisconnect {
-  @WebSocketServer()
-  private readonly server?: Server;
-
   private readonly clients: Record<string, Subscription> = {};
 
-  constructor(private readonly weatherService: WeatherService, private readonly caldavService: CalDavService) {
-    this.weatherService.forecasts$.subscribe(weather => this.server?.emit('weather', weather));
-    this.caldavService.events$.subscribe(events => this.server?.emit('calendar', events));
-  }
+  constructor(private readonly weatherService: WeatherService, private readonly caldavService: CalDavService) {}
 
   public handleConnection(client: Socket): void {
     Logger.log(`Client connected: ${client.id}`);

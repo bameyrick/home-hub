@@ -20,22 +20,6 @@
   display: block;
   padding: $page-padding;
 
-  &__header {
-    display: flex;
-    align-items: center;
-  }
-
-  &__title {
-    margin: 0;
-  }
-
-  &__home {
-    width: 1rem;
-    height: 1rem;
-    margin: 0 0.5rem 0 0;
-    color: $colour-grey;
-  }
-
   &__section {
     padding: $page-padding 0 0;
     border-top: 1px solid $colour-grey;

@@ -1,0 +1,9 @@
+<header home-hub-page-header class="WeatherForecasts__header" [title]="'Weather Forecasts'"></header>
+
+<div class="WeatherForecasts__locations">
+  <home-hub-weather-forecast
+    class="WeatherForecasts__location"
+    *ngFor="let location of forecastLocations$ | async"
+    [location]="location"
+  ></home-hub-weather-forecast>
+</div>

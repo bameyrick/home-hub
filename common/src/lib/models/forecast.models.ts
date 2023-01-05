@@ -8,10 +8,10 @@ export interface ForecastLocation {
   requestedPointDistance: number;
   modelRunDate: Date;
   hourly: ForecastedHour[];
-  daily: ForecastedDay[];
+  threeHourly: ForecastedHour[];
 }
 
-export interface ForecastedHour {
+export interface ForecastedHour extends SunriseSunset {
   time: Date;
   temperature: number;
   feelsLikeTemperature: number;
@@ -22,12 +22,4 @@ export interface ForecastedHour {
   weatherCode: number;
   precipitationProbability: number;
   humidity: number;
-}
-
-export interface ForecastedDay extends SunriseSunset {
-  date: Date;
-  dayMaximumTemperature: number;
-  nightMinimumTemperature: number;
-  uvIndex: number;
-  weatherCode: number;
 }

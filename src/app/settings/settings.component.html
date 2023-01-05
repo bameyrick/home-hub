@@ -1,7 +1,4 @@
-<header class="Settings__header">
-  <a [routerLink]="AppRoute.Root" [icon]="Icon.Clock" [iconClass]="'Settings__home'"></a>
-  <h1 class="Settings__title">Settings</h1>
-</header>
+<header home-hub-page-header [title]="'Settings'"></header>
 
 <p *ngIf="!form">Loading ...</p>
 

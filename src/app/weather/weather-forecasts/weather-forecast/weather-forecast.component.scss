@@ -1,0 +1,68 @@
+@import '../../../../styles/variables-and-helpers';
+
+.WeatherForecast {
+  &__title {
+    z-index: 2;
+    position: sticky;
+    top: 0;
+    left: 0;
+    background-color: $colour-white;
+    margin: 0;
+    padding: 1rem 0;
+  }
+
+  &__table {
+    border-collapse: collapse;
+  }
+
+  &__thead {
+    z-index: 2;
+    position: sticky;
+    top: 65px;
+  }
+
+  &__day-name,
+  &__subtitle {
+    display: inline-block;
+    position: sticky;
+    left: 0;
+    padding: 0.5rem;
+    margin: 0;
+  }
+
+  &__cell {
+    position: relative;
+    box-shadow: inset 0 0 0 1px $colour-white;
+    padding: 0.5rem;
+    text-align: center;
+    background: $colour-alabaster;
+    fill: $colour-alabaster;
+
+    &--title {
+      padding: 0;
+      text-align: left;
+      background-color: $colour-concrete;
+    }
+
+    &--subtitle {
+      z-index: 1;
+      padding: 0;
+      text-align: left;
+      background-color: $colour-porcelain;
+      font-weight: bold;
+    }
+
+    &--time {
+      padding: 0.5rem;
+      text-align: center;
+    }
+  }
+
+  &__icon {
+    font-size: 3rem;
+  }
+
+  &__compass {
+    font-size: 2rem;
+  }
+}

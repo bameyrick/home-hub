@@ -1,10 +1,11 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, ViewEncapsulation } from '@angular/core';
 import { ComponentAbstract } from '../../abstracts/component.abstract';
 
 @Component({
   selector: 'home-hub-compass',
   templateUrl: './compass.component.html',
   styleUrls: ['./compass.component.scss'],
+  encapsulation: ViewEncapsulation.None,
 })
 export class CompassComponent extends ComponentAbstract {
   @Input() public direction?: number = 0;

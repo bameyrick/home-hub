@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { ForecastLocation } from '@home-hub/common';
+import { ForecastedHour, ForecastLocation } from '@home-hub/common';
 import { Store } from '@ngrx/store';
 import { Socket } from 'ngx-socket-io';
 import { map } from 'rxjs';
@@ -19,19 +19,23 @@ export class WeatherService {
           locations.map(location => ({
             ...location,
             modelRunDate: new Date(location.modelRunDate),
-            hourly: location.hourly.map(hour => ({ ...hour, time: new Date(hour.time) })),
-            daily: location.daily.map(day => ({
-              ...day,
-              date: new Date(day.date),
-              sunrise: new Date(day.sunrise),
-              sunset: new Date(day.sunset),
-              noon: new Date(day.noon),
-              twilightBegin: new Date(day.twilightBegin),
-              twilightEnd: new Date(day.twilightEnd),
-            })),
+            hourly: location.hourly.map(hour => this.remapDates(hour)),
+            threeHourly: location.threeHourly.map(hour => this.remapDates(hour)),
           }))
         )
       )
       .subscribe(locations => this.store.dispatch(WeatherActions.weatherUpdated({ locations })));
+  }
+
+  private remapDates(hour: ForecastedHour): ForecastedHour {
+    return {
+      ...hour,
+      time: new Date(hour.time),
+      sunrise: new Date(hour.sunrise),
+      sunset: new Date(hour.sunset),
+      noon: new Date(hour.noon),
+      twilightBegin: new Date(hour.twilightBegin),
+      twilightEnd: new Date(hour.twilightEnd),
+    };
   }
 }

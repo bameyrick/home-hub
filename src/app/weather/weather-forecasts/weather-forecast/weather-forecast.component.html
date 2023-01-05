@@ -1,0 +1,127 @@
+<h2 class="WeatherForecast__title">{{ location?.name }}</h2>
+
+<table class="WeatherForecast__table">
+  <thead class="WeatherForecast__thead">
+    <tr>
+      <th
+        *ngFor="let day of location?.days | keyvalue"
+        [colSpan]="day.value.length"
+        class="WeatherForecast__cell WeatherForecast__cell--title"
+      >
+        <h3 class="WeatherForecast__day-name">
+          <ng-container *ngIf="day.key === (today$ | async); else dayName">Today</ng-container>
+
+          <ng-template #dayName>{{ day.key | date : 'EEEE' }}</ng-template>
+        </h3>
+      </th>
+    </tr>
+    <tr>
+      <ng-container *ngFor="let day of location?.days | keyvalue">
+        <td *ngFor="let hour of day.value" class="WeatherForecast__cell WeatherForecast__cell--subtitle WeatherForecast__cell--time">
+          <p>{{ hour.time | date : 'HH:mm' }}</p>
+        </td>
+      </ng-container>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <ng-container *ngFor="let day of location?.days | keyvalue">
+        <td *ngFor="let hour of day.value" class="WeatherForecast__cell WeatherForecast__cell--icon">
+          <home-hub-weather-icon
+            [title]="hour.weatherCode | weatherDescription : hour.sunrise : hour.sunset : hour.time"
+            class="WeatherForecast__icon"
+            [weatherCode]="hour.weatherCode"
+            [displayTime]="hour.time"
+            [sunrise]="hour.sunrise"
+            [sunset]="hour.sunset"
+          ></home-hub-weather-icon>
+        </td>
+      </ng-container>
+    </tr>
+    <tr>
+      <td [colSpan]="location?.totalHours" class="WeatherForecast__cell WeatherForecast__cell--subtitle">
+        <p class="WeatherForecast__subtitle">Chance of precipitation</p>
+      </td>
+    </tr>
+    <tr>
+      <ng-container *ngFor="let day of location?.days | keyvalue">
+        <td *ngFor="let hour of day.value" class="WeatherForecast__cell">
+          <p>{{ hour.precipitationProbability }}%</p>
+        </td>
+      </ng-container>
+    </tr>
+    <tr>
+      <td [colSpan]="location?.totalHours" class="WeatherForecast__cell WeatherForecast__cell--subtitle">
+        <p class="WeatherForecast__subtitle">Temperature</p>
+      </td>
+    </tr>
+    <tr>
+      <ng-container *ngFor="let day of location?.days | keyvalue">
+        <td *ngFor="let hour of day.value" class="WeatherForecast__cell">
+          <p>{{ hour.temperature | number : '1.0-0' }}°</p>
+        </td>
+      </ng-container>
+    </tr>
+    <tr>
+      <td [colSpan]="location?.totalHours" class="WeatherForecast__cell WeatherForecast__cell--subtitle">
+        <p class="WeatherForecast__subtitle">Feels like temperature</p>
+      </td>
+    </tr>
+    <tr>
+      <ng-container *ngFor="let day of location?.days | keyvalue">
+        <td *ngFor="let hour of day.value" class="WeatherForecast__cell">
+          <p>{{ hour.feelsLikeTemperature | number : '1.0-0' }}°</p>
+        </td>
+      </ng-container>
+    </tr>
+    <tr>
+      <td [colSpan]="location?.totalHours" class="WeatherForecast__cell WeatherForecast__cell--subtitle">
+        <p class="WeatherForecast__subtitle">Wind (mph)</p>
+      </td>
+    </tr>
+    <tr>
+      <ng-container *ngFor="let day of location?.days | keyvalue">
+        <td *ngFor="let hour of day.value" class="WeatherForecast__cell">
+          <home-hub-compass class="WeatherForecast__compass" [direction]="hour.windDirection"></home-hub-compass>
+          <p>{{ hour.windSpeed | number : '1.0-0' }}</p>
+        </td>
+      </ng-container>
+    </tr>
+    <tr>
+      <td [colSpan]="location?.totalHours" class="WeatherForecast__cell WeatherForecast__cell--subtitle">
+        <p class="WeatherForecast__subtitle">Wind gust (mph)</p>
+      </td>
+    </tr>
+    <tr>
+      <ng-container *ngFor="let day of location?.days | keyvalue">
+        <td *ngFor="let hour of day.value" class="WeatherForecast__cell">
+          <p>{{ hour.windGust | number : '1.0-0' }}</p>
+        </td>
+      </ng-container>
+    </tr>
+    <tr>
+      <td [colSpan]="location?.totalHours" class="WeatherForecast__cell WeatherForecast__cell--subtitle">
+        <p class="WeatherForecast__subtitle">Humidity</p>
+      </td>
+    </tr>
+    <tr>
+      <ng-container *ngFor="let day of location?.days | keyvalue">
+        <td *ngFor="let hour of day.value" class="WeatherForecast__cell">
+          <p>{{ hour.humidity | number : '1.0-0' }}%</p>
+        </td>
+      </ng-container>
+    </tr>
+    <tr>
+      <td [colSpan]="location?.totalHours" class="WeatherForecast__cell WeatherForecast__cell--subtitle">
+        <p class="WeatherForecast__subtitle">UV</p>
+      </td>
+    </tr>
+    <tr>
+      <ng-container *ngFor="let day of location?.days | keyvalue">
+        <td *ngFor="let hour of day.value" class="WeatherForecast__cell">
+          <home-hub-weather-uv [uvIndex]="hour.uvIndex"></home-hub-weather-uv>
+        </td>
+      </ng-container>
+    </tr>
+  </tbody>
+</table>

@@ -1,0 +1,17 @@
+@import '../../../styles/variables-and-helpers';
+
+.WeatherForecasts {
+  display: flex;
+  flex-direction: column;
+  padding: $page-padding;
+  max-height: 100vh;
+
+  &__header {
+    margin: 0 !important;
+  }
+
+  &__locations {
+    flex: 1 1 auto;
+    overflow-y: auto;
+  }
+}

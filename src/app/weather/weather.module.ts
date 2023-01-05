@@ -4,9 +4,12 @@ import { BaseModule } from '../base.module';
 import { CompassComponent } from './compass/compass.component';
 import { WeatherDescriptionPipe } from './pipes/weather-description.pipe';
 import { weatherReducer, WEATHER_FEATURE_KEY } from './store';
+import { WeatherForecastComponent } from './weather-forecasts/weather-forecast/weather-forecast.component';
+import { WeatherForecastsComponent } from './weather-forecasts/weather-forecasts.component';
 import { WeatherIconComponent } from './weather-icon/weather-icon.component';
 import { WeatherNowComponent } from './weather-now/weather-now.component';
 import { WeatherSkyComponent } from './weather-sky/weather-sky.component';
+import { WeatherUVComponent } from './weather-uv/weather-uv.component';
 import { WeatherComponent } from './weather.component';
 import { WeatherService } from './weather.service';
 
@@ -19,6 +22,9 @@ import { WeatherService } from './weather.service';
     WeatherDescriptionPipe,
     CompassComponent,
     WeatherNowComponent,
+    WeatherForecastsComponent,
+    WeatherForecastComponent,
+    WeatherUVComponent,
   ],
   exports: [WeatherComponent],
 })

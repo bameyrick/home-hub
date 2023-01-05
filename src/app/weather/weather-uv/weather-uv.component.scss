@@ -1,0 +1,40 @@
+@import '../../../styles/variables-and-helpers';
+
+.WeatherUV {
+  display: inline-block;
+  width: 2em;
+  height: 2em;
+  border: 1px solid $colour-black;
+  line-height: 2em;
+  font-weight: bold;
+
+  &--0 {
+    background-color: $colour-grey;
+  }
+
+  &--1,
+  &--2 {
+    background-color: $colour-green;
+  }
+
+  &--3,
+  &--4,
+  &--5 {
+    background-color: $colour-yellow;
+  }
+
+  &--6,
+  &--7 {
+    background-color: $colour-orange;
+  }
+
+  &--8,
+  &--9,
+  &--10 {
+    background-color: $colour-red;
+  }
+
+  &--11 {
+    background-color: $colour-purple;
+  }
+}

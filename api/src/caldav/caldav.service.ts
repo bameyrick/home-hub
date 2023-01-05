@@ -3,7 +3,7 @@ import { Injectable, Logger } from '@nestjs/common';
 import { convertTimeUnit, getEndOfYear, getStartOfDay, isEmpty, isNullOrUndefined, TimeUnit, unitToMS } from '@qntm-code/utils';
 import * as ical from 'ical';
 import { CalendarComponent } from 'ical';
-import { combineLatest, filter, forkJoin, map, mergeMap, of, switchMap, tap, timer } from 'rxjs';
+import { combineLatest, filter, forkJoin, map, mergeMap, of, shareReplay, switchMap, tap, timer } from 'rxjs';
 import { sortBy } from 'sort-by-typescript';
 import { createDAVClient, DAVObject } from 'tsdav';
 import { DatabasePersistenceService } from '../database/database.service';
@@ -26,7 +26,8 @@ export class CalDavService {
         authMethod: 'Basic',
         defaultAccountType: 'caldav',
       })
-    )
+    ),
+    shareReplay(1)
   );
 
   public readonly events$ = combineLatest([
@@ -49,7 +50,8 @@ export class CalDavService {
           })
         )
       ).pipe(map(calendars => this.parseEvents(calendars)))
-    )
+    ),
+    shareReplay(1)
   );
 
   constructor(private readonly db: DatabasePersistenceService) {}
@@ -90,7 +92,7 @@ export class CalDavService {
       summary: component.summary!,
       location: component.location!,
       latLon: (component['APPLE-STRUCTURED-LOCATION'] as unknown as Record<string, string>)?.['val']
-        .replace('geo:', '')
+        .split('geo:')[1]
         .split(',')
         .map(coordinate => parseFloat(coordinate)) as [number, number],
       travelTime,

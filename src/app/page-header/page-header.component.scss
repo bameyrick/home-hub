@@ -1,0 +1,22 @@
+@import '../../styles/variables-and-helpers';
+
+.PageHeader {
+  display: flex;
+  align-items: center;
+  margin: 0 0 $page-padding;
+  justify-content: space-between;
+
+  &__title {
+    margin: 0;
+    line-height: 1;
+  }
+
+  &__link {
+    height: 1em;
+    font-size: 1rem;
+  }
+
+  &__home {
+    color: $colour-grey;
+  }
+}
