@@ -139,7 +139,7 @@ export class WeatherEffects {
 
     const maxCount = Math.max(...Object.values(weatherCodes).map(code => code.count));
     const mostCommonWeatherCodes = Object.values(weatherCodes).filter(code => code.count === maxCount);
-    const middleWeatherCode = weatherHours[Math.round(weatherHours.length / 2)].weatherCode;
+    const middleWeatherCode = weatherHours[weatherHours.length === 1 ? 0 : Math.round(weatherHours.length / 2)].weatherCode;
 
     let weatherCode: number = middleWeatherCode;
 

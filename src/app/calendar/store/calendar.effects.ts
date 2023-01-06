@@ -19,7 +19,7 @@ export class CalendarEffects {
         this.store.select(selectCalendarEvents).pipe(
           map(events => this.filterEventsForToday(events)),
           withLatestFrom(this.store.select(selectTodaysEvents)),
-          filter((a, b) => !isEqual(a, b)),
+          filter(([a, b]) => !isEqual(a, b)),
           map(([todaysEvents]) => CalendarActions.todaysCalendarEventsGenerated({ todaysEvents }))
         )
       )
