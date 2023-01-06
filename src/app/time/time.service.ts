@@ -15,4 +15,10 @@ export class TimeService {
     distinctUntilChanged(),
     shareReplay(1)
   );
+
+  public readonly currentMinute$ = this.now$.pipe(
+    map(now => now.getMinutes()),
+    distinctUntilChanged(),
+    shareReplay(1)
+  );
 }

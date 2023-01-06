@@ -1,7 +1,7 @@
 import { ForecastedHour, ForecastLocation, LatLon, MetOfficeCredentials, SunriseSunset } from '@home-hub/common';
 import { HttpService } from '@nestjs/axios';
 import { Injectable, Logger } from '@nestjs/common';
-import { convertTimeUnit, getStartOfDay, isEmpty, isEqual, isNullOrUndefined, TimeUnit } from '@qntm-code/utils';
+import { convertTimeUnit, getStartOfDay, isEmpty, isEqual, isNullOrUndefined, TimeUnit, unitToMS } from '@qntm-code/utils';
 import {
   BehaviorSubject,
   catchError,
@@ -13,6 +13,7 @@ import {
   forkJoin,
   map,
   Observable,
+  retry,
   shareReplay,
   switchMap,
   tap,
@@ -151,13 +152,19 @@ export class WeatherService {
         },
       })
       .pipe(
+        retry({ delay: unitToMS(1, TimeUnit.Minutes), count: 10 }),
         map(({ data }) => data.features[0]),
         catchError(error => {
-          Logger.error(
-            `${error.response.data.httpCode}: Error getting weather forecast for ${
-              location.name ?? `${location.latitude},${location.longitude}`
-            }. ${error.response.data.moreInformation}. {${url}, GET}`
-          );
+          if (error.response) {
+            Logger.error(
+              `${error.response.data.httpCode}: Error getting weather forecast for ${
+                location.name ?? `${location.latitude},${location.longitude}`
+              }. ${error.response.data.moreInformation}. {${url}, GET}`
+            );
+          } else {
+            Logger.error(error);
+          }
+
           return EMPTY;
         })
       );
@@ -179,6 +186,7 @@ export class WeatherService {
         }&formatted=0`
       )
       .pipe(
+        retry({ delay: unitToMS(1, TimeUnit.Minutes), count: 10 }),
         map(({ data }) => ({
           sunrise: new Date(data.results.sunrise),
           sunset: new Date(data.results.sunset),

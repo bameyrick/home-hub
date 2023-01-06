@@ -12,6 +12,7 @@ import { WeatherActions } from './store';
 export class WeatherService {
   constructor(private readonly socket: Socket, private readonly store: Store, private readonly timeService: TimeService) {
     this.timeService.currentHour$.pipe(skip(1)).subscribe(() => this.store.dispatch(WeatherActions.generateForecasts()));
+    this.timeService.currentMinute$.pipe(skip(1)).subscribe(() => this.store.dispatch(WeatherActions.generateCurrentWeather()));
   }
 
   public setupWebsocket(): void {

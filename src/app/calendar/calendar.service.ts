@@ -2,14 +2,17 @@ import { Injectable } from '@angular/core';
 import { CalendarEvent } from '@home-hub/common';
 import { Store } from '@ngrx/store';
 import { Socket } from 'ngx-socket-io';
-import { map } from 'rxjs';
+import { map, skip } from 'rxjs';
+import { TimeService } from '../time/time.service';
 import { CalendarActions } from './store';
 
 @Injectable({
   providedIn: 'root',
 })
 export class CalendarService {
-  constructor(private readonly socket: Socket, private readonly store: Store) {}
+  constructor(private readonly socket: Socket, private readonly store: Store, private readonly timeSerice: TimeService) {
+    this.timeSerice.currentMinute$.pipe(skip(1)).subscribe(() => this.store.dispatch(CalendarActions.generateTodaysCalendarEvents()));
+  }
 
   public setupWebsocket(): void {
     this.socket

@@ -3,7 +3,7 @@ import { Injectable, Logger } from '@nestjs/common';
 import { convertTimeUnit, getEndOfYear, getStartOfDay, isEmpty, isNullOrUndefined, TimeUnit, unitToMS } from '@qntm-code/utils';
 import * as ical from 'ical';
 import { CalendarComponent } from 'ical';
-import { combineLatest, filter, forkJoin, map, mergeMap, of, shareReplay, switchMap, tap, timer } from 'rxjs';
+import { catchError, combineLatest, EMPTY, filter, forkJoin, map, mergeMap, of, retry, shareReplay, switchMap, tap, timer } from 'rxjs';
 import { sortBy } from 'sort-by-typescript';
 import { createDAVClient, DAVObject } from 'tsdav';
 import { DatabasePersistenceService } from '../database/database.service';
@@ -27,6 +27,12 @@ export class CalDavService {
         defaultAccountType: 'caldav',
       })
     ),
+    retry({ delay: unitToMS(1, TimeUnit.Minutes), count: 60 }),
+    catchError(() => {
+      Logger.error('CANNOT CREATE CALDAV CLIENT');
+
+      return EMPTY;
+    }),
     shareReplay(1)
   );
 
@@ -36,6 +42,7 @@ export class CalDavService {
   ]).pipe(
     tap(() => Logger.log(`FETCHING CALENDAR EVENTS`)),
     mergeMap(([_, client]) => combineLatest([of(client), client.fetchCalendars()])),
+    retry({ delay: unitToMS(30, TimeUnit.Seconds), count: 1 }),
     map(([client, calendars]) => ({
       client,
       calendars: calendars.filter(calendar => calendar.components?.includes('VEVENT') && !calendar.resourcetype.includes('shared')),

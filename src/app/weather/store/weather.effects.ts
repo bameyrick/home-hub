@@ -2,12 +2,12 @@ import { Injectable } from '@angular/core';
 import { ForecastedHour, ForecastLocation } from '@home-hub/common';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { Store } from '@ngrx/store';
-import { getEndOfDay, getStartOfDay, getStartOfHour } from '@qntm-code/utils';
-import { map, switchMap } from 'rxjs';
+import { getEndOfDay, getStartOfDay, getStartOfHour, getStartOfMinute, isEqual } from '@qntm-code/utils';
+import { filter, map, switchMap, withLatestFrom } from 'rxjs';
 import { weatherCodeToAnimatedWeatherType } from '../helpers';
-import { WeatherForecastDay, WeatherForecastDays, WeatherForecastLocation } from '../models';
+import { CurrentWeather, WeatherForecastDay, WeatherForecastDays, WeatherForecastLocation } from '../models';
 import { WeatherActions } from './weather.actions';
-import { selectWeatherLocations } from './weather.selectors';
+import { selectCurrentWeather, selectFirstWeatherLocation, selectForecastLocations, selectWeatherLocations } from './weather.selectors';
 
 @Injectable()
 export class WeatherEffects {
@@ -18,18 +18,55 @@ export class WeatherEffects {
       ofType(WeatherActions.weatherUpdated, WeatherActions.generateForecasts),
       switchMap(() =>
         this.store.select(selectWeatherLocations).pipe(
-          map(locations =>
-            WeatherActions.forecastsGenerated({
-              locationForecasts: locations?.map(location => this.createLocationForecast(location)) || [],
-            })
-          )
+          map(locations => {
+            const now = getStartOfHour();
+
+            return locations?.map(location => this.createLocationForecast(location, now)) || [];
+          }),
+          withLatestFrom(this.store.select(selectForecastLocations)),
+          filter(([a, b]) => !isEqual(a, b)),
+          map(([locationForecasts]) => WeatherActions.forecastsGenerated({ locationForecasts }))
         )
       )
     )
   );
 
-  private createLocationForecast(location: ForecastLocation): WeatherForecastLocation {
-    const now = new Date();
+  public readonly generateCurrentWeather$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(WeatherActions.weatherUpdated, WeatherActions.generateCurrentWeather),
+      switchMap(() =>
+        this.store.select(selectFirstWeatherLocation).pipe(
+          map(location => this.createCurrentWeather(location)),
+          withLatestFrom(this.store.select(selectCurrentWeather)),
+          filter(([a, b]) => !isEqual(a, b)),
+          map(([currentWeather]) => WeatherActions.currentWeatherGenerated({ currentWeather }))
+        )
+      )
+    )
+  );
+
+  private createCurrentWeather(location?: ForecastLocation): CurrentWeather | undefined {
+    const now = getStartOfMinute();
+    const hour = location?.hourly.find(hour => isEqual(getStartOfHour(hour.time), getStartOfHour(now)));
+
+    const result: CurrentWeather | undefined =
+      hour && location
+        ? {
+            ...hour,
+            sunrise: hour.sunrise,
+            sunset: hour.sunset,
+            noon: hour.noon,
+            twilightBegin: hour.twilightBegin,
+            twilightEnd: hour.twilightEnd,
+            updated: location.modelRunDate,
+            name: location.locationName,
+          }
+        : undefined;
+
+    return result;
+  }
+
+  private createLocationForecast(location: ForecastLocation, now: Date): WeatherForecastLocation {
     const lastHourlyTime = location.hourly[location.hourly.length - 1].time;
 
     const hours = [...location.hourly, ...location.threeHourly.filter(hour => hour.time > lastHourlyTime)].filter(

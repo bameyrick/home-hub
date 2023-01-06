@@ -1,8 +1,7 @@
 import { Component, ElementRef, HostListener, ViewEncapsulation } from '@angular/core';
 import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
-import { switchMap } from 'rxjs';
-import { AppRoute } from 'src/models';
+import { AppRoute } from '../../models';
 import { ComponentAbstract } from '../abstracts';
 import { TimeService } from '../time/time.service';
 import { selectCurrentWeather } from './store';
@@ -14,7 +13,7 @@ import { selectCurrentWeather } from './store';
   encapsulation: ViewEncapsulation.None,
 })
 export class WeatherComponent extends ComponentAbstract {
-  public readonly currentWeather$ = this.timeService.now$.pipe(switchMap(now => this.store.select(selectCurrentWeather(now))));
+  public readonly currentWeather$ = this.store.select(selectCurrentWeather);
 
   @HostListener('click') public readonly onClick = () => this.router.navigateByUrl(AppRoute.Forecasts);
 
