@@ -110,7 +110,9 @@ export class WeatherEffects {
     const { sunrise, sunset, noon } = hours[0];
     const temperatures = hours.map(hour => hour.temperature);
     const weatherHours =
-      now < sunset ? hours.filter(hour => hour.time >= sunrise && hour.time <= sunset) : hours.filter(hour => hour.time > now);
+      now < sunset
+        ? hours.filter(hour => hour.time >= sunrise && hour.time <= sunset)
+        : hours.filter(hour => hour.time >= getStartOfHour(now));
     const weatherCodes = weatherHours
       .map(hour => hour.weatherCode)
       .reduce(

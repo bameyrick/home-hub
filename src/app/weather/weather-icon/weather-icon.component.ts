@@ -33,7 +33,7 @@ export class WeatherIconComponent extends IsVisbileComponentAbstract implements 
         if (visible) {
           this.icon?.setType(type, time);
         } else {
-          this.icon?.unsetIcon();
+          this.icon?.unsetIcon(true);
         }
       });
   }
