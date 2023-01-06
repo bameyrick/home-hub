@@ -29,30 +29,33 @@ export const selectCurrentWeather = (now: Date) =>
     return result;
   });
 
-export const selectForecastLocations = createSelector(selectWeatherState, state =>
-  state.locations?.map(location => {
-    const lastHourly = location.hourly[location.hourly.length - 1].time;
+export const selectForecastLocations = (now: Date) =>
+  createSelector(selectWeatherState, state =>
+    state.locations?.map(location => {
+      const lastHourly = location.hourly[location.hourly.length - 1].time;
 
-    const items = [...location.hourly, ...location.threeHourly.filter(hour => hour.time > lastHourly)];
+      const items = [...location.hourly, ...location.threeHourly.filter(hour => hour.time > lastHourly)].filter(
+        item => item.time >= getStartOfHour(now)
+      );
 
-    const days = items.reduce((result, item) => {
-      const day = getStartOfDay(item.time).getTime();
+      const days = items.reduce((result, item) => {
+        const day = getStartOfDay(item.time).getTime();
 
-      if (!result[day]) {
-        result[day] = [];
-      }
+        if (!result[day]) {
+          result[day] = [];
+        }
 
-      result[day].push(item);
+        result[day].push(item);
+
+        return result;
+      }, {} as WeatherForecastDays);
+
+      const result: WeatherForecastLocation = {
+        name: location.locationName,
+        days,
+        totalHours: items.length,
+      };
 
       return result;
-    }, {} as WeatherForecastDays);
-
-    const result: WeatherForecastLocation = {
-      name: location.locationName,
-      days,
-      totalHours: items.length,
-    };
-
-    return result;
-  })
-);
+    })
+  );

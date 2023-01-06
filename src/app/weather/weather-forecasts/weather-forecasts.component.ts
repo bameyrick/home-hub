@@ -1,6 +1,9 @@
 import { Component, ElementRef, ViewEncapsulation } from '@angular/core';
 import { Store } from '@ngrx/store';
+import { isEqual } from '@qntm-code/utils';
+import { distinctUntilChanged, shareReplay, switchMap } from 'rxjs';
 import { ComponentAbstract } from '../../abstracts';
+import { TimeService } from '../../time/time.service';
 import { selectForecastLocations } from '../store';
 
 @Component({
@@ -10,9 +13,13 @@ import { selectForecastLocations } from '../store';
   encapsulation: ViewEncapsulation.None,
 })
 export class WeatherForecastsComponent extends ComponentAbstract {
-  public readonly forecastLocations$ = this.store.select(selectForecastLocations);
+  public readonly forecastLocations$ = this.timeService.now$.pipe(
+    switchMap(now => this.store.select(selectForecastLocations(now))),
+    distinctUntilChanged((a, b) => isEqual(a, b)),
+    shareReplay(1)
+  );
 
-  constructor(element: ElementRef, private readonly store: Store) {
+  constructor(element: ElementRef, private readonly store: Store, private readonly timeService: TimeService) {
     super(element);
   }
 }

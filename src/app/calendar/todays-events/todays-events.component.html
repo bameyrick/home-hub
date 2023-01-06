@@ -1,4 +1,8 @@
-<div class="TodaysEvents__event Event" *ngFor="let event of events$ | async; trackBy: trackBy">
+<div
+  class="TodaysEvents__event Event"
+  *ngFor="let event of events$ | async; trackBy: trackBy"
+  [routerLink]="getLinkForRoute(AppRoute.Event, { id: event.id })"
+>
   <h1 class="Event__title">
     {{ event.summary }}
   </h1>
@@ -15,7 +19,7 @@
 
   <div *ngIf="event.travelTime" class="Event__travel-time">
     <p>Travel time: {{ event.travelTime | milliseconds }}</p>
-    <p>Leave at: {{ event.leaveAt | date : 'HH:mm' }}</p>
+    <p>Leave by: {{ event.leaveAt | date : 'HH:mm' }}</p>
   </div>
 </div>
 

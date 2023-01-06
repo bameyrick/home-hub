@@ -1,0 +1,51 @@
+@import '../../../styles/variables-and-helpers';
+
+.CalendarEvent {
+  display: block;
+  padding: $page-padding;
+
+  &__inner {
+    display: flex;
+    justify-content: space-between;
+    background: $colour-alabaster;
+    border-radius: 0.5em;
+    overflow: hidden;
+    box-shadow: 0 5px 5px -3px rgba(0, 0, 0, 0.2), 0 8px 10px 1px rgba(0, 0, 0, 0.14), 0 3px 14px 2px rgba(0, 0, 0, 0.12);
+  }
+
+  &__time {
+    padding: $page-padding;
+    background: $colour-red;
+    color: $colour-white;
+    text-shadow: 0 1px 5px rgba(0, 0, 0, 0.3);
+  }
+
+  &__details {
+    padding: $page-padding;
+  }
+
+  &__location {
+    margin: 0 0 $page-padding;
+
+    p {
+      margin: 0 0 0.2em;
+    }
+  }
+
+  &__travel-time {
+    color: $colour-text-secondary;
+
+    p {
+      margin: 0 0 0.2em;
+    }
+  }
+
+  &__map {
+    border-top-right-radius: 0.5em;
+    border-bottom-right-radius: 0.5em;
+    flex: 1 0 auto;
+    width: 78vh;
+    height: 78vh;
+    overflow: hidden;
+  }
+}

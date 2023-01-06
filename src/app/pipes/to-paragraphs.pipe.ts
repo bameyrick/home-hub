@@ -5,9 +5,9 @@ import { SafeHtml } from '@angular/platform-browser';
   name: 'toParagraphs',
 })
 export class ToParagraphsPipe implements PipeTransform {
-  public transform(value: string): SafeHtml {
+  public transform(value?: string): SafeHtml | undefined {
     return value
-      .split(`\n`)
+      ?.split(`\n`)
       .map(line => `<p>${line}</p>`)
       .join(``);
   }

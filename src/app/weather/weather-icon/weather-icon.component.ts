@@ -1,6 +1,8 @@
-import { Component, ElementRef, Input, OnChanges, SimpleChanges, ViewEncapsulation } from '@angular/core';
-import { isNullOrUndefined } from '@qntm-code/utils';
+import { Component, Input, OnChanges, OnInit, SimpleChanges, ViewEncapsulation } from '@angular/core';
+import { isEqual, isNullOrUndefined } from '@qntm-code/utils';
 import { AnimatedWeatherIcon, AnimatedWeatherTimes, AnimatedWeatherTypes } from 'animated-weather-icon';
+import { combineLatest, distinctUntilChanged, ReplaySubject } from 'rxjs';
+import { IsVisbileComponentAbstract } from '../../abstracts';
 
 @Component({
   selector: 'home-hub-weather-icon',
@@ -8,7 +10,7 @@ import { AnimatedWeatherIcon, AnimatedWeatherTimes, AnimatedWeatherTypes } from 
   styleUrls: ['./weather-icon.component.scss'],
   encapsulation: ViewEncapsulation.None,
 })
-export class WeatherIconComponent implements OnChanges {
+export class WeatherIconComponent extends IsVisbileComponentAbstract implements OnInit, OnChanges {
   @Input() public weatherCode?: number;
 
   @Input() public sunrise?: Date;
@@ -19,7 +21,21 @@ export class WeatherIconComponent implements OnChanges {
 
   public icon?: AnimatedWeatherIcon;
 
-  constructor(private readonly elementRef: ElementRef) {}
+  private readonly iconParams$ = new ReplaySubject<{ type: AnimatedWeatherTypes; time: AnimatedWeatherTimes }>(1);
+
+  public override ngOnInit(): void {
+    super.ngOnInit();
+
+    combineLatest([this.iconParams$, this.visible$])
+      .pipe(distinctUntilChanged((a, b) => isEqual(a, b)))
+      .subscribe(([{ type, time }, visible]) => {
+        if (visible) {
+          this.icon?.setType(type, time);
+        } else {
+          this.icon?.unsetIcon();
+        }
+      });
+  }
 
   public ngOnChanges(changes: SimpleChanges): void {
     if (
@@ -37,7 +53,7 @@ export class WeatherIconComponent implements OnChanges {
       this.icon = new AnimatedWeatherIcon(this.elementRef.nativeElement);
     }
 
-    this.icon.setType(this.iconType, this.iconTime);
+    this.iconParams$.next({ type: this.iconType, time: this.iconTime });
   }
 
   private get iconType(): AnimatedWeatherTypes {

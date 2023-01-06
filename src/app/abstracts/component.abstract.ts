@@ -1,4 +1,5 @@
 import { Directive, ElementRef, OnDestroy } from '@angular/core';
+import { getLinkForRoute } from '@home-hub/common';
 import { Subscription } from 'rxjs';
 import { AppRoute } from '../../models';
 import { Icon } from '../enums';
@@ -7,6 +8,7 @@ import { Icon } from '../enums';
 export abstract class ComponentAbstract implements OnDestroy {
   public readonly AppRoute = AppRoute;
   public readonly Icon = Icon;
+  public readonly getLinkForRoute = getLinkForRoute;
 
   protected readonly subscriptions = new Subscription();
 

@@ -1,0 +1,20 @@
+<header home-hub-page-header class="CalendarEvent__header" [title]="(event$ | async)?.summary"></header>
+
+<div class="CalendarEvent__inner">
+  <div>
+    <h2 class="CalendarEvent__time">
+      {{ (event$ | async)?.start | date : 'HH:mm EEE d LLL YYYY' }} – {{ (event$ | async)?.end | date : 'HH:mm EEE d LLL YYYY' }}
+    </h2>
+
+    <div class="CalendarEvent__details">
+      <div class="CalendarEvent__location" *ngIf="(event$ | async)?.location" [innerHTML]="(event$ | async)?.location | toParagraphs"></div>
+
+      <div *ngIf="(event$ | async)?.travelTime" class="CalendarEvent__travel-time">
+        <p>Travel time: {{ (event$ | async)?.travelTime | milliseconds }}</p>
+        <p>Leave by: {{ (event$ | async)?.leaveAt | date : 'HH:mm' }}</p>
+      </div>
+    </div>
+  </div>
+
+  <home-hub-map *ngIf="(event$ | async)?.latLon" [latLon]="(event$ | async)?.latLon" class="CalendarEvent__map"></home-hub-map>
+</div>

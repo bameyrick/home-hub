@@ -7,11 +7,15 @@
   max-height: 100vh;
 
   &__header {
+    z-index: 3;
     margin: 0 !important;
+    padding: 0 0 $page-padding;
+    background: $colour-white;
   }
 
   &__locations {
+    margin: -1em 0 0;
     flex: 1 1 auto;
-    overflow-y: auto;
+    overflow: auto;
   }
 }

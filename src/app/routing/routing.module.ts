@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { AppRoute } from '../../models';
+import { CalendarEventComponent } from '../calendar/calendar-event/calendar-event.component';
 import { WeatherForecastsComponent } from '../weather/weather-forecasts/weather-forecasts.component';
 
 const routes: Routes = [
@@ -18,6 +19,10 @@ const routes: Routes = [
       {
         path: AppRoute.Forecasts,
         component: WeatherForecastsComponent,
+      },
+      {
+        path: AppRoute.Event,
+        component: CalendarEventComponent,
       },
       {
         path: '**',

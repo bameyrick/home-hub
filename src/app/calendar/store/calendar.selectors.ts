@@ -25,6 +25,8 @@ export const selectTodaysEvents = (now: Date) =>
       })
   );
 
+export const selectEventById = (id: string) => createSelector(selectCalendarEvents, events => events?.find(event => event.id === id));
+
 function getTimeFormat(allDay: boolean, event: CalendarEvent, comparator: (event: CalendarEvent) => boolean): string {
   let timeFormat = 'HH:mm';
 

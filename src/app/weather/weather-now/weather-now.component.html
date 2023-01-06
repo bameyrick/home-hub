@@ -30,7 +30,7 @@
       </td>
       <td class="WeatherNow__cell">
         <p class="WeatherNow__label">UV Index</p>
-        <p>{{ (currentWeather$ | async)?.uvIndex }}</p>
+        <p>{{ (currentWeather$ | async)?.uvIndex === 0 ? '-' : (currentWeather$ | async)?.uvIndex }}</p>
       </td>
     </tr>
     <tr class="WeatherNow__row">

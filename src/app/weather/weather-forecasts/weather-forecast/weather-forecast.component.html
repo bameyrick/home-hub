@@ -2,7 +2,7 @@
 
 <table class="WeatherForecast__table">
   <thead class="WeatherForecast__thead">
-    <tr>
+    <tr class="WeatherForecast__row WeatherForecast__row--first">
       <th
         *ngFor="let day of location?.days | keyvalue"
         [colSpan]="day.value.length"
@@ -116,7 +116,7 @@
         <p class="WeatherForecast__subtitle">UV</p>
       </td>
     </tr>
-    <tr>
+    <tr class="WeatherForecast__row WeatherForecast__row--last">
       <ng-container *ngFor="let day of location?.days | keyvalue">
         <td *ngFor="let hour of day.value" class="WeatherForecast__cell">
           <home-hub-weather-uv [uvIndex]="hour.uvIndex"></home-hub-weather-uv>
