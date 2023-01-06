@@ -1,0 +1,55 @@
+<div
+  class="WeatherForecastNavigation__day WeatherDay"
+  [ngClass]="{ 'WeatherDay--current': day.key === (currentDay$ | async) }"
+  [ngStyle]="{ 'flex-basis': day.key === (currentDay$ | async) ? location?.flexBasisCurrent : location?.flexBasis }"
+  (click)="setCurrentDay(day.key)"
+  *ngFor="let day of location?.days | keyvalue"
+>
+  <ng-template #title>
+    <ng-container *ngIf="day.key === (today$ | async); else dayName">Today</ng-container>
+
+    <ng-template #dayName>{{ day.key | date : 'EEE d LLL' }}</ng-template>
+  </ng-template>
+
+  <div *ngIf="day.key === (currentDay$ | async)" class="WeatherDay__current">
+    <div>
+      <h2 class="WeatherDay__current-date"><ng-container *ngTemplateOutlet="title"></ng-container></h2>
+
+      <div class="WeatherDay__temps">
+        <p class="WeatherDay__max-temp">{{ day.value.maxTemp | number : '1.0-0' }}°</p>
+        <p class="WeatherDay__min-temp">{{ day.value.minTemp | number : '1.0-0' }}°</p>
+      </div>
+
+      <div class="WeatherDay__sunrise-sunset">
+        <div>
+          <h4 class="WeatherDay__sunrise-sunset-title">Sunrise</h4>
+          <p>{{ day.value.sunrise | date : 'HH:mm' }}</p>
+        </div>
+        <div>
+          <h4 class="WeatherDay__sunrise-sunset-title">Sunset</h4>
+          <p>{{ day.value.sunset | date : 'HH:mm' }}</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div *ngIf="day.key !== (currentDay$ | async)" class="WeatherDay__inactive">
+    <p class="WeatherDay__date"><ng-container *ngTemplateOutlet="title"></ng-container></p>
+
+    <div class="WeatherDay__summary">
+      <home-hub-weather-icon
+        class="WeatherDay__icon"
+        [weatherCode]="day.value.weatherCode"
+        [sunrise]="day.value.sunrise"
+        [sunset]="day.value.sunset"
+        [displayTime]="day.key === (today$ | async) ? (timeService.now$ | async) : day.value.noon"
+      >
+      </home-hub-weather-icon>
+
+      <div class="WeatherDay__temps">
+        <p class="WeatherDay__max-temp">{{ day.value.maxTemp | number : '1.0-0' }}°</p>
+        <p class="WeatherDay__min-temp">{{ day.value.minTemp | number : '1.0-0' }}°</p>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,71 @@
+@import '../../../../../styles/variables-and-helpers';
+
+.WeatherForecastNavigation {
+  display: flex;
+}
+
+.WeatherDay {
+  flex-grow: 1;
+  flex-shrink: 0;
+  padding: 0.6rem;
+  background: $colour-alabaster;
+  border: 1px solid $colour-concrete;
+
+  &:first-child {
+    border-top-left-radius: 0.3rem;
+    border-bottom-left-radius: 0.3rem;
+  }
+
+  &:last-child {
+    border-top-right-radius: 0.3rem;
+    border-bottom-right-radius: 0.3rem;
+  }
+
+  &:not(:last-child) {
+    border-right: none;
+  }
+
+  &--current {
+    background: $colour-white;
+  }
+
+  &__date {
+    font-size: 0.64rem;
+    font-weight: bold;
+  }
+
+  &__temps {
+    display: flex;
+    align-items: flex-end;
+  }
+
+  &__max-temp {
+    margin: 0 0.2em 0 0;
+  }
+
+  &__min-temp {
+    color: $colour-text-ternary;
+    font-size: 0.9em;
+  }
+
+  &__sunrise-sunset {
+    display: flex;
+    justify-content: space-between;
+    font-size: 0.7em;
+    margin: 0.5rem 0 0;
+  }
+
+  &__sunrise-sunset-title {
+    font-size: 1.1em;
+    margin: 0 0 0.2em;
+  }
+
+  &__summary {
+    text-align: center;
+  }
+
+  &__icon {
+    display: inline-block;
+    font-size: 2rem;
+  }
+}

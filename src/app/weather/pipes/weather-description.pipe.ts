@@ -16,7 +16,6 @@ export class WeatherDescriptionPipe implements PipeTransform {
       case 3: {
         return 'Partly cloudy';
       }
-
       case 5: {
         return 'Misty';
       }

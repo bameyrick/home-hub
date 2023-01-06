@@ -8,7 +8,7 @@ import { SettingsActions } from './settings.actions';
 export class SettingsEffects {
   constructor(private readonly actions$: Actions, private readonly settingsService: SettingsService) {}
 
-  public getSettings$ = createEffect(() =>
+  public readonly getSettings$ = createEffect(() =>
     this.actions$.pipe(
       ofType(SettingsActions.getSettings),
       switchMap(() =>
@@ -20,7 +20,7 @@ export class SettingsEffects {
     )
   );
 
-  public saveSettings$ = createEffect(() =>
+  public readonly saveSettings$ = createEffect(() =>
     this.actions$.pipe(
       ofType(SettingsActions.saveSettings),
       switchMap(({ settings }) =>

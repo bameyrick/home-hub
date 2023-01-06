@@ -11,6 +11,12 @@
     padding: 1rem 0;
   }
 
+  &__navigation {
+    position: sticky;
+    left: 0;
+    // top: 65px;
+  }
+
   &__table {
     border-collapse: collapse;
   }

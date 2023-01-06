@@ -2,14 +2,17 @@ import { Injectable } from '@angular/core';
 import { ForecastedHour, ForecastLocation } from '@home-hub/common';
 import { Store } from '@ngrx/store';
 import { Socket } from 'ngx-socket-io';
-import { map } from 'rxjs';
+import { map, skip } from 'rxjs';
+import { TimeService } from '../time/time.service';
 import { WeatherActions } from './store';
 
 @Injectable({
   providedIn: 'root',
 })
 export class WeatherService {
-  constructor(private readonly socket: Socket, private readonly store: Store) {}
+  constructor(private readonly socket: Socket, private readonly store: Store, private readonly timeService: TimeService) {
+    this.timeService.currentHour$.pipe(skip(1)).subscribe(() => this.store.dispatch(WeatherActions.generateForecasts()));
+  }
 
   public setupWebsocket(): void {
     this.socket
