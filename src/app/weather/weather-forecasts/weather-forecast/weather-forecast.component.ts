@@ -27,7 +27,7 @@ export class WeatherForecastComponent extends ComponentAbstract implements After
 
   private scrollingToDay = false;
 
-  private readonly atBoundsOffset = 100;
+  private readonly atBoundsOffset = 70;
 
   private scrollFinishSubscription?: Subscription;
 
