@@ -1,5 +1,6 @@
 import { AfterViewInit, Component, ElementRef, EventEmitter, ViewChild, ViewEncapsulation } from '@angular/core';
 import { Store } from '@ngrx/store';
+import { delay } from '@qntm-code/utils';
 import { ComponentAbstract } from '../../abstracts';
 import { selectForecastLocations } from '../store';
 import { WeatherForecastScrollAreaDimensions } from './weather-forecast-scroll-area-dimensions.model';
@@ -23,7 +24,10 @@ export class WeatherForecastsComponent extends ComponentAbstract implements Afte
     super(element);
   }
 
-  public ngAfterViewInit(): void {
+  public async ngAfterViewInit(): Promise<void> {
+    // Prevent ExpressionChangedAfterItHasBeenCheckedError
+    await delay();
+
     if (!this.scrollArea) {
       throw new Error('Scroll area not found');
     }
