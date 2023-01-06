@@ -6,4 +6,5 @@ export interface WeatherForecastLocation {
   name: string;
   days: WeatherForecastDays;
   totalHours: number;
+  updated: Date;
 }

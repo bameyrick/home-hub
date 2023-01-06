@@ -54,6 +54,7 @@ export const selectForecastLocations = (now: Date) =>
         name: location.locationName,
         days,
         totalHours: items.length,
+        updated: location.modelRunDate,
       };
 
       return result;
