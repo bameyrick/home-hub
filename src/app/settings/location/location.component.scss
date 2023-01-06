@@ -2,19 +2,19 @@
 
 .Location {
   padding: 2rem 1rem 1rem;
-  background: $colour-alabaster;
   border-radius: 0.5rem;
+  background: $colour-alabaster;
 
   &__legend {
-    font-weight: bold;
     position: relative;
     top: 1.5rem;
+    font-weight: bold;
   }
 
   &__fields {
     display: flex;
-    margin: 0 -0.5rem;
     align-items: flex-end;
+    margin: 0 -0.5rem;
   }
 
   &__field {
@@ -24,8 +24,8 @@
   &__actions {
     display: flex;
     flex: 1 1 auto;
-    margin: 0 -0.25rem;
     justify-content: flex-end;
+    margin: 0 -0.25rem;
 
     > * {
       margin: 0 0.25rem;

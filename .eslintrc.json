@@ -3,16 +3,13 @@
   "overrides": [
     {
       "files": ["*.ts"],
-      "extends": [
-        "plugin:@nrwl/nx/angular",
-        "plugin:@angular-eslint/template/process-inline-templates"
-      ],
+      "extends": ["plugin:@nrwl/nx/angular", "plugin:@angular-eslint/template/process-inline-templates"],
       "rules": {
         "@angular-eslint/directive-selector": [
           "error",
           {
             "type": "attribute",
-            "prefix": "homeHub",
+            // "prefix": "homeHub",
             "style": "camelCase"
           }
         ],
@@ -20,7 +17,7 @@
           "error",
           {
             "type": "element",
-            "prefix": "home-hub",
+            // "prefix": "home-hub",
             "style": "kebab-case"
           }
         ]
@@ -30,6 +27,14 @@
       "files": ["*.html"],
       "extends": ["plugin:@nrwl/nx/angular-template"],
       "rules": {}
+    },
+    {
+      "files": ["*.md"],
+      "parser": "eslint-plugin-markdownlint/parser",
+      "extends": ["plugin:markdownlint/recommended"],
+      "rules": {
+        "markdownlint/md013": "off"
+      }
     }
   ],
   "extends": ["./.eslintrc.base.json"]

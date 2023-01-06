@@ -15,13 +15,13 @@
   border-left: 1em solid $colour-red;
   border-radius: 0.5em;
   background: $colour-alabaster;
-  box-shadow: 0 5px 5px -3px rgba(0, 0, 0, 0.2), 0 8px 10px 1px rgba(0, 0, 0, 0.14), 0 3px 14px 2px rgba(0, 0, 0, 0.12);
+  box-shadow: 0 5px 5px -3px rgb(0 0 0 / 20%), 0 8px 10px 1px rgb(0 0 0 / 14%), 0 3px 14px 2px rgb(0 0 0 / 12%);
 
   &__title {
     @include font-size('fs-l');
-    white-space: nowrap;
-    text-overflow: ellipsis;
     overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
   }
 
   &__times {
@@ -30,8 +30,8 @@
 
   &__location,
   &__travel-time {
-    font-size: 0.8em;
     color: $colour-text-ternary;
+    font-size: 0.8em;
 
     p {
       margin: 0 0 0.15em;
