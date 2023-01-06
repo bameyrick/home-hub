@@ -24,7 +24,8 @@
 
   &__animated-icon {
     position: absolute;
-    align-self: center;
+    top: 45%;
+    transform: translate(0, -50%);
     font-size: 40vw;
   }
 

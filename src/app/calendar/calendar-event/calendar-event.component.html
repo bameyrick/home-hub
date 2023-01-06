@@ -1,7 +1,7 @@
 <header home-hub-page-header class="CalendarEvent__header" [title]="(event$ | async)?.summary"></header>
 
-<div class="CalendarEvent__inner">
-  <div>
+<div class="CalendarEvent__card">
+  <div class="CalendarEvent__left">
     <h2 class="CalendarEvent__time">
       {{ (event$ | async)?.start | date : 'HH:mm EEE d LLL YYYY' }} – {{ (event$ | async)?.end | date : 'HH:mm EEE d LLL YYYY' }}
     </h2>
