@@ -12,7 +12,9 @@ export abstract class IsVisbileComponentAbstract extends ComponentAbstract imple
     super(elementRef);
   }
 
-  public ngOnInit(): void {
+  public override ngOnInit(): void {
+    super.ngOnInit();
+
     this.ngZone.runOutsideAngular(() => {
       this.intersectionObserver = new IntersectionObserver(entries => entries.forEach(entry => this.visible$.next(entry.isIntersecting)));
 

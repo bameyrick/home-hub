@@ -13,6 +13,8 @@ import { ComponentAbstract } from '../abstracts';
   encapsulation: ViewEncapsulation.None,
 })
 export class MapComponent extends ComponentAbstract implements OnChanges, AfterViewInit {
+  protected readonly baseClassName = 'Map';
+
   @Input() public latLon?: [number, number];
 
   private map?: Map;

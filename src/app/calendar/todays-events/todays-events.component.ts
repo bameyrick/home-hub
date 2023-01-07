@@ -11,6 +11,8 @@ import { selectTodaysEvents } from '../store';
   encapsulation: ViewEncapsulation.None,
 })
 export class TodaysEventsComponent extends ComponentAbstract {
+  protected readonly baseClassName = 'TodaysEvents';
+
   public readonly events$ = this.store.select(selectTodaysEvents);
 
   constructor(elementRef: ElementRef, private readonly store: Store) {

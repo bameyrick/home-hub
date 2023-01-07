@@ -53,7 +53,9 @@ export abstract class ControlAbstract<ValueType extends any | null | undefined>
     super(elementRef);
   }
 
-  public ngOnInit(): void {
+  public override ngOnInit(): void {
+    super.ngOnInit();
+
     this.control = this.injector.get<NgControl | null>(NgControl, null);
   }
 

@@ -1,4 +1,6 @@
 import { Module } from '@nestjs/common';
+import { ServeStaticModule } from '@nestjs/serve-static';
+import { join } from 'path';
 import { CalDavModule } from '../caldav/caldav.module';
 import { SettingsModule } from '../settings/settings.module';
 import { WeatherModule } from '../weather/weather.module';
@@ -8,7 +10,14 @@ import { AppService } from './app.service';
 import { SocketGateway } from './socket.gateway';
 
 @Module({
-  imports: [SettingsModule, WeatherModule, CalDavModule],
+  imports: [
+    ServeStaticModule.forRoot({
+      rootPath: join(__dirname, '..', 'home-hub'),
+    }),
+    SettingsModule,
+    WeatherModule,
+    CalDavModule,
+  ],
   controllers: [AppController],
   providers: [AppService, SocketGateway],
 })

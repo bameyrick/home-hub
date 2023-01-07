@@ -24,6 +24,8 @@ import { ControlAbstract } from '../../abstracts';
   ],
 })
 export class LocationComponent extends ControlAbstract<NullableLatLon> implements AsyncValidator {
+  protected readonly baseClassName = 'Location';
+
   public async onLatitudeChange(latitude: number): Promise<void> {
     this.setValue({ ...(await firstValueFrom(this.value$)), latitude });
   }

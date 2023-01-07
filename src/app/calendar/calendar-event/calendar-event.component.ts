@@ -12,6 +12,8 @@ import { selectEventById } from '../store';
   encapsulation: ViewEncapsulation.None,
 })
 export class CalendarEventComponent extends ComponentAbstract {
+  protected readonly baseClassName = 'CalendarEvent';
+
   public readonly event$ = this.activatedRoute.params.pipe(
     map(params => params['id']),
     switchMap(id => this.store.select(selectEventById(id)))

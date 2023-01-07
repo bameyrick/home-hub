@@ -10,5 +10,7 @@ import { CurrentWeather } from '../models';
   encapsulation: ViewEncapsulation.None,
 })
 export class WeatherNowComponent extends ComponentAbstract {
+  protected readonly baseClassName = 'WeatherNow';
+
   @Input() public currentWeather$?: Observable<CurrentWeather | undefined>;
 }

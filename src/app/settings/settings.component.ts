@@ -24,6 +24,8 @@ interface SettingsForm {
   encapsulation: ViewEncapsulation.None,
 })
 export class SettingsComponent extends ComponentAbstract {
+  protected readonly baseClassName = 'Settings';
+
   public readonly loading$ = this.store.select(selectSettingsLoading);
 
   public form?: FormGroup<SettingsForm>;

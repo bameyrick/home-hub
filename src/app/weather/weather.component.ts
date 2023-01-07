@@ -13,6 +13,8 @@ import { selectCurrentWeather } from './store';
   encapsulation: ViewEncapsulation.None,
 })
 export class WeatherComponent extends ComponentAbstract {
+  protected readonly baseClassName = 'Weather';
+
   public readonly currentWeather$ = this.store.select(selectCurrentWeather);
 
   @HostListener('click') public readonly onClick = () => this.router.navigateByUrl(AppRoute.Forecasts);

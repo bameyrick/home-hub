@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, ElementRef, EventEmitter, Input, QueryList, ViewChildren } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, EventEmitter, Input, QueryList, ViewChildren, ViewEncapsulation } from '@angular/core';
 import { getStartOfDay } from '@qntm-code/utils';
 import { debounceTime, distinctUntilChanged, filter, map, Observable, Subscription } from 'rxjs';
 import { sortBy } from 'sort-by-typescript';
@@ -11,8 +11,11 @@ import { WeatherForecastScrollAreaDimensions } from '../weather-forecast-scroll-
   selector: 'home-hub-weather-forecast',
   templateUrl: './weather-forecast.component.html',
   styleUrls: ['./weather-forecast.component.scss'],
+  encapsulation: ViewEncapsulation.None,
 })
 export class WeatherForecastComponent extends ComponentAbstract implements AfterViewInit {
+  protected readonly baseClassName = 'WeatherForecast';
+
   @Input() public location?: WeatherForecastLocation;
 
   @Input() public scrollEvents?: EventEmitter<void>;

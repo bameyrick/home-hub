@@ -1,4 +1,4 @@
-import { AfterContentInit, Component, ElementRef, Input } from '@angular/core';
+import { AfterContentInit, Component, ElementRef, Input, ViewEncapsulation } from '@angular/core';
 import { TimeUnit, unitToMS } from '@qntm-code/utils';
 import { map } from 'rxjs';
 import { ComponentAbstract } from '../../abstracts';
@@ -8,8 +8,11 @@ import { TimeService } from '../../time/time.service';
   selector: 'home-hub-weather-sky',
   templateUrl: './weather-sky.component.html',
   styleUrls: ['./weather-sky.component.scss'],
+  encapsulation: ViewEncapsulation.None,
 })
 export class WeatherSkyComponent extends ComponentAbstract implements AfterContentInit {
+  protected readonly baseClassName = 'WeatherSky';
+
   @Input() public twilightBegin?: Date;
 
   @Input() public sunrise?: Date;

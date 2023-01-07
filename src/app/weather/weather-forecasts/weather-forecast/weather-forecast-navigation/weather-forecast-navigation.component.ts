@@ -12,6 +12,8 @@ import { WeatherForecastLocation } from '../../../models';
   encapsulation: ViewEncapsulation.None,
 })
 export class WeatherForecastNavigationComponent extends ComponentAbstract implements OnChanges {
+  protected readonly baseClassName = 'WeatherForecastNavigation';
+
   @Input() public location?: WeatherForecastLocation;
 
   @Input() public currentDay?: string | null;

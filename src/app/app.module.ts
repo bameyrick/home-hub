@@ -33,7 +33,7 @@ import { ROOT_REDUCERS, RoutingModule } from './routing';
     EffectsModule.forRoot([]),
     RoutingModule,
     SocketIoModule.forRoot({
-      url: `http://localhost:3333`,
+      url: `http://localhost:${environment.port}`,
     }),
   ],
   providers: [],

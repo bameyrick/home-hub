@@ -9,6 +9,8 @@ import { ComponentAbstract } from '../../abstracts';
   encapsulation: ViewEncapsulation.None,
 })
 export class WeatherUVComponent extends ComponentAbstract implements OnChanges {
+  protected readonly baseClassName = 'WeatherUV';
+
   @Input() public uvIndex?: number;
 
   public ngOnChanges(changes: SimpleChanges): void {

@@ -10,6 +10,8 @@ import { IsVisbileComponentAbstract } from '../../abstracts';
   encapsulation: ViewEncapsulation.None,
 })
 export class CompassComponent extends IsVisbileComponentAbstract implements OnInit, OnChanges {
+  protected readonly baseClassName = 'Compass';
+
   @Input() public direction?: number = 0;
 
   private direction$ = new BehaviorSubject<number>(0);

@@ -12,6 +12,8 @@ import { WeatherForecastScrollAreaDimensions } from './weather-forecast-scroll-a
   encapsulation: ViewEncapsulation.None,
 })
 export class WeatherForecastsComponent extends ComponentAbstract implements AfterViewInit {
+  protected readonly baseClassName = 'WeatherForecasts';
+
   public readonly forecastLocations$ = this.store.select(selectForecastLocations);
 
   public readonly onScroll = new EventEmitter<void>();

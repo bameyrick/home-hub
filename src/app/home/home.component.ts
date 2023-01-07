@@ -9,6 +9,8 @@ import { TimeService } from '../time/time.service';
   encapsulation: ViewEncapsulation.None,
 })
 export class HomeComponent extends ComponentAbstract {
+  protected readonly baseClassName = 'Home';
+
   constructor(elementRef: ElementRef, public readonly timeService: TimeService) {
     super(elementRef);
   }

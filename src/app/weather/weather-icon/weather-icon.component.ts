@@ -12,6 +12,8 @@ import { weatherCodeToAnimatedWeatherType } from '../helpers';
   encapsulation: ViewEncapsulation.None,
 })
 export class WeatherIconComponent extends IsVisbileComponentAbstract implements OnInit, OnChanges {
+  protected readonly baseClassName = 'WeatherIcon';
+
   @Input() public weatherCode?: number;
 
   @Input() public sunrise?: Date;

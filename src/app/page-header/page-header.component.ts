@@ -9,4 +9,6 @@ import { ComponentAbstract } from '../abstracts';
 })
 export class PageHeaderComponent extends ComponentAbstract {
   @Input() public title?: string;
+
+  protected readonly baseClassName = 'PageHeader';
 }
