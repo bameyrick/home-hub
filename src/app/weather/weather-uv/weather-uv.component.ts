@@ -24,6 +24,6 @@ export class WeatherUVComponent extends ComponentAbstract implements OnChanges {
   }
 
   private getClassName(uvIndex: number): string {
-    return `${this.constructor.name.split('Component')[0]}--${uvIndex}`;
+    return `${this.baseClassName}--${uvIndex}`;
   }
 }
