@@ -45,7 +45,7 @@
     "@nrwl/angular": "15.3.3",
     "@qntm-code/utils": "^2.8.1",
     "@types/ical": "^0.8.0",
-    "animated-weather-icon": "^1.1.3",
+    "animated-weather-icon": "^1.1.4",
     "ical": "^0.8.0",
     "ngx-socket-io": "^4.4.0",
     "normalize.css": "^8.0.1",
