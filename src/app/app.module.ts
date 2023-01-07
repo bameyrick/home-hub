@@ -33,8 +33,4 @@ import { ROOT_REDUCERS, RoutingModule } from './routing';
   providers: [],
   bootstrap: [AppComponent],
 })
-export class AppModule {
-  constructor() {
-    console.log('PRODUCTION: ', environment.production);
-  }
-}
+export class AppModule {}
