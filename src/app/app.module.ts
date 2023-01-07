@@ -18,18 +18,12 @@ import { ROOT_REDUCERS, RoutingModule } from './routing';
     BrowserModule,
     BaseModule,
     StoreRouterConnectingModule.forRoot(),
-    StoreModule.forRoot(ROOT_REDUCERS, {
-      // runtimeChecks: {
-      //   strictStateSerializability: false,
-      //   strictActionSerializability: false,
-      //   // strictActionWithinNgZone: false,
-      //   strictActionTypeUniqueness: true,
-      // },
-    }),
-    StoreDevtoolsModule.instrument({
-      name: 'ngrx Send Partners App',
-      logOnly: environment.production,
-    }),
+    StoreModule.forRoot(ROOT_REDUCERS),
+    !environment.production
+      ? StoreDevtoolsModule.instrument({
+          name: 'Home Hub App',
+        })
+      : [],
     EffectsModule.forRoot([]),
     RoutingModule,
     SocketIoModule.forRoot({
@@ -39,4 +33,8 @@ import { ROOT_REDUCERS, RoutingModule } from './routing';
   providers: [],
   bootstrap: [AppComponent],
 })
-export class AppModule {}
+export class AppModule {
+  constructor() {
+    console.log('PRODUCTION: ', environment.production);
+  }
+}
