@@ -90,14 +90,22 @@ export class WeatherEffects {
   }
 
   private createLocationDays(hours: ForecastedHour[], now: Date): WeatherForecastDays {
-    const days = hours.reduce((result, hour) => {
-      const day = getStartOfDay(hour.time).getTime();
+    const days = Object.entries(
+      hours.reduce((result, hour) => {
+        const day = getStartOfDay(hour.time).getTime();
 
-      if (!result[day]) {
-        result[day] = this.createForecastDay(
-          hours.filter(hour => hour.time.getTime() >= day && hour.time <= getEndOfDay(new Date(day))),
-          now
-        );
+        if (!result[day]) {
+          result[day] = this.createForecastDay(
+            hours.filter(hour => hour.time.getTime() >= day && hour.time <= getEndOfDay(new Date(day))),
+            now
+          );
+        }
+
+        return result;
+      }, {} as Record<string, WeatherForecastDay | undefined>)
+    ).reduce((result, [key, value]) => {
+      if (value) {
+        result[key] = value;
       }
 
       return result;
@@ -106,13 +114,18 @@ export class WeatherEffects {
     return days;
   }
 
-  private createForecastDay(hours: ForecastedHour[], now: Date): WeatherForecastDay {
+  private createForecastDay(hours: ForecastedHour[], now: Date): WeatherForecastDay | undefined {
     const { sunrise, sunset, noon } = hours[0];
     const temperatures = hours.map(hour => hour.temperature);
     const weatherHours =
       now < sunset
         ? hours.filter(hour => hour.time >= sunrise && hour.time <= sunset)
         : hours.filter(hour => hour.time >= getStartOfHour(now));
+
+    if (weatherHours.length === 0) {
+      return;
+    }
+
     const weatherCodes = weatherHours
       .map(hour => hour.weatherCode)
       .reduce(

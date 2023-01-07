@@ -10,7 +10,7 @@ export interface WeatherForecastDay {
   hours: ForecastedHour[];
 }
 
-export type WeatherForecastDays = Record<number, WeatherForecastDay>;
+export type WeatherForecastDays = Record<string, WeatherForecastDay>;
 
 export interface WeatherForecastLocation {
   name: string;
