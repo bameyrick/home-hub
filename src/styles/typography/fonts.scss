@@ -1,33 +1,22 @@
-$fonts-gilroy-bold-woff: '/assets/fonts/gilroy-bold.woff';
-$fonts-gilroy-bold-woff2: '/assets/fonts/gilroy-bold.woff2';
-$fonts-gilroy-heavy-woff: '/assets/fonts/gilroy-heavy.woff';
-$fonts-gilroy-heavy-woff2: '/assets/fonts/gilroy-heavy.woff2';
-$fonts-gilroy-light-woff: '/assets/fonts/gilroy-light.woff';
-$fonts-gilroy-light-woff2: '/assets/fonts/gilroy-light.woff2';
-$fonts-gilroy-medium-woff: '/assets/fonts/gilroy-medium.woff';
-$fonts-gilroy-medium-woff2: '/assets/fonts/gilroy-medium.woff2';
-$fonts-gilroy-regular-woff: '/assets/fonts/gilroy-regular.woff';
-$fonts-gilroy-regular-woff2: '/assets/fonts/gilroy-regular.woff2';
-
 @font-face {
   font-family: Gilroy;
   font-style: normal;
   font-weight: $font-weight-light;
-  src: url(#{$fonts-gilroy-light-woff2}) format('woff2'), url(#{$fonts-gilroy-light-woff}) format('woff');
+  src: url(#{$assets-fonts-gilroy-light-woff2}) format('woff2'), url(#{$assets-fonts-gilroy-light-woff}) format('woff');
 }
 
 @font-face {
   font-family: Gilroy;
   font-style: normal;
   font-weight: $font-weight-normal;
-  src: url(#{$fonts-gilroy-regular-woff2}) format('woff2'), url(#{$fonts-gilroy-regular-woff}) format('woff');
+  src: url(#{$assets-fonts-gilroy-regular-woff2}) format('woff2'), url(#{$assets-fonts-gilroy-regular-woff}) format('woff');
 }
 
 @font-face {
   font-family: Gilroy;
   font-style: normal;
   font-weight: $font-weight-medium;
-  src: url(#{$fonts-gilroy-medium-woff2}) format('woff2'), url(#{$fonts-gilroy-medium-woff}) format('woff');
+  src: url(#{$assets-fonts-gilroy-medium-woff2}) format('woff2'), url(#{$assets-fonts-gilroy-medium-woff}) format('woff');
 }
 
 @font-face {
@@ -35,12 +24,12 @@ $fonts-gilroy-regular-woff2: '/assets/fonts/gilroy-regular.woff2';
   font-style: normal;
   font-weight: $font-weight-bold;
   letter-spacing: 0.02em;
-  src: url(#{$fonts-gilroy-bold-woff2}) format('woff2'), url(#{$fonts-gilroy-bold-woff}) format('woff');
+  src: url(#{$assets-fonts-gilroy-bold-woff2}) format('woff2'), url(#{$assets-fonts-gilroy-bold-woff}) format('woff');
 }
 
 @font-face {
   font-family: Gilroy;
   font-style: normal;
   font-weight: $font-weight-heavy;
-  src: url(#{$fonts-gilroy-heavy-woff2}) format('woff2'), url(#{$fonts-gilroy-heavy-woff}) format('woff');
+  src: url(#{$assets-fonts-gilroy-heavy-woff2}) format('woff2'), url(#{$assets-fonts-gilroy-heavy-woff}) format('woff');
 }

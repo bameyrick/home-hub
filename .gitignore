@@ -5,8 +5,11 @@ dist
 tmp
 /out-tsc
 src/assets/svg
-src/app/enums/icons.ts
 src/assets/symbols.svg
+src/assets-hashed
+src/app/enums/asset-paths.ts
+src/app/enums/icons.ts
+src/styles/settings/asset-paths.scss
 
 # dependencies
 node_modules
