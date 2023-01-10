@@ -27,7 +27,7 @@ import { ROOT_REDUCERS, RoutingModule } from './routing';
     EffectsModule.forRoot([]),
     RoutingModule,
     SocketIoModule.forRoot({
-      url: `http://localhost:${environment.port}`,
+      url: `${location.origin}:${environment.port}`,
     }),
   ],
   providers: [],
