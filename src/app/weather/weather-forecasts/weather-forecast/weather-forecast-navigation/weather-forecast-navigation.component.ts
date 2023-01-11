@@ -29,18 +29,20 @@ export class WeatherForecastNavigationComponent extends ComponentAbstract implem
   constructor(elementRef: ElementRef, public readonly timeService: TimeService) {
     super(elementRef);
 
-    combineLatest([this.availableDays$, this.today$, this.currentDay$])
-      .pipe(
-        distinctUntilChanged(),
-        filter(([availableDays, today, currentDay]) => {
-          if (!currentDay || currentDay < today) {
-            return true;
-          }
+    this.subscriptions.add(
+      combineLatest([this.availableDays$, this.today$, this.currentDay$])
+        .pipe(
+          distinctUntilChanged(),
+          filter(([availableDays, today, currentDay]) => {
+            if (!currentDay || currentDay < today) {
+              return true;
+            }
 
-          return !availableDays.includes(currentDay);
-        })
-      )
-      .subscribe(([availableDays]) => this.currentDay$.next(availableDays[0]));
+            return !availableDays.includes(currentDay);
+          })
+        )
+        .subscribe(([availableDays]) => this.currentDay$.next(availableDays[0]))
+    );
   }
 
   public ngOnChanges(changes: SimpleChanges): void {

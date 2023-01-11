@@ -1,5 +1,6 @@
 <home-hub-weather-sky
   class="Weather__sky"
+  [time]="timeService.now$ | async"
   [twilightBegin]="(currentWeather$ | async)?.twilightBegin"
   [sunrise]="(currentWeather$ | async)?.sunrise"
   [noon]="(currentWeather$ | async)?.noon"

@@ -8,16 +8,15 @@ const NS_SVG = 'http://www.w3.org/2000/svg';
 const NS_XLINK = 'http://www.w3.org/1999/xlink';
 
 @Directive({
-  // eslint-disable-next-line @angular-eslint/directive-selector
   selector: '[icon]',
 })
 export class IconDirective implements OnChanges {
   /**
    * Populates the icon by name
    */
-  @Input('icon') public set iconName(value: Icon | undefined | null) {
-    if (value && Object.values(Icon).includes(value)) {
-      this.name = value;
+  @Input('icon') public set iconName(value: Icon | string | undefined | null) {
+    if (value && Object.values(Icon).includes(value as Icon)) {
+      this.name = value as Icon;
 
       this.useElement.setAttributeNS(NS_XLINK, 'href', `#${value}`);
     } else {
@@ -28,7 +27,7 @@ export class IconDirective implements OnChanges {
   /**
    * Gets the current icon name
    */
-  public get iconName(): Icon | undefined | null {
+  public get iconName(): Icon | string | undefined | null {
     return this.name;
   }
 
@@ -65,6 +64,7 @@ export class IconDirective implements OnChanges {
   constructor(
     @Inject(DOCUMENT) private readonly document: Document,
     private readonly elementRef: ElementRef,
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     _iconService: SvgSymbolService
   ) {}
 

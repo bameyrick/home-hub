@@ -33,23 +33,21 @@
     </div>
   </div>
 
-  <div *ngIf="day.key !== (currentDay$ | async)" class="WeatherDay__inactive">
+  <ng-container *ngIf="day.key !== (currentDay$ | async)">
     <p class="WeatherDay__date"><ng-container *ngTemplateOutlet="title"></ng-container></p>
 
-    <div class="WeatherDay__summary">
-      <home-hub-weather-icon
-        class="WeatherDay__icon"
-        [weatherCode]="day.value.weatherCode"
-        [sunrise]="day.value.sunrise"
-        [sunset]="day.value.sunset"
-        [displayTime]="day.key === (today$ | async) ? (timeService.now$ | async) : day.value.noon"
-      >
-      </home-hub-weather-icon>
+    <home-hub-weather-icon
+      class="WeatherDay__icon"
+      [weatherCode]="day.value.weatherCode"
+      [sunrise]="day.value.sunrise"
+      [sunset]="day.value.sunset"
+      [displayTime]="day.key === (today$ | async) ? (timeService.now$ | async) : day.value.noon"
+    >
+    </home-hub-weather-icon>
 
-      <div class="WeatherDay__temps">
-        <p class="WeatherDay__max-temp">{{ day.value.maxTemp | number : '1.0-0' }}°</p>
-        <p class="WeatherDay__min-temp">{{ day.value.minTemp | number : '1.0-0' }}°</p>
-      </div>
+    <div class="WeatherDay__temps">
+      <p class="WeatherDay__max-temp">{{ day.value.maxTemp | number : '1.0-0' }}°</p>
+      <p class="WeatherDay__min-temp">{{ day.value.minTemp | number : '1.0-0' }}°</p>
     </div>
-  </div>
+  </ng-container>
 </div>

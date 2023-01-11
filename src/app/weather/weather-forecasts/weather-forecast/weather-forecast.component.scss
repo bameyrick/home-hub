@@ -14,8 +14,6 @@
   &__navigation {
     position: sticky;
     left: 0;
-
-    // top: 65px;
   }
 
   &__table {
@@ -67,7 +65,18 @@
     }
   }
 
+  &__sky {
+    position: absolute;
+    top: 1px;
+    right: 1px;
+    bottom: 1px;
+    left: 1px;
+    border-radius: 0.3rem;
+  }
+
   &__icon {
+    position: relative;
+    height: 1em;
     font-size: 3rem;
   }
 

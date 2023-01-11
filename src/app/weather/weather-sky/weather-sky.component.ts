@@ -1,8 +1,6 @@
-import { AfterContentInit, Component, ElementRef, Input, ViewEncapsulation } from '@angular/core';
+import { Component, Input, OnChanges, ViewEncapsulation } from '@angular/core';
 import { TimeUnit, unitToMS } from '@qntm-code/utils';
-import { map } from 'rxjs';
 import { ComponentAbstract } from '../../abstracts';
-import { TimeService } from '../../time/time.service';
 
 @Component({
   selector: 'home-hub-weather-sky',
@@ -10,8 +8,10 @@ import { TimeService } from '../../time/time.service';
   styleUrls: ['./weather-sky.component.scss'],
   encapsulation: ViewEncapsulation.None,
 })
-export class WeatherSkyComponent extends ComponentAbstract implements AfterContentInit {
+export class WeatherSkyComponent extends ComponentAbstract implements OnChanges {
   protected readonly baseClassName = 'WeatherSky';
+
+  @Input() public time?: Date | null;
 
   @Input() public twilightBegin?: Date;
 
@@ -29,27 +29,25 @@ export class WeatherSkyComponent extends ComponentAbstract implements AfterConte
 
   public daySkyOpacity = 0;
 
-  constructor(elementRef: ElementRef, private readonly timeService: TimeService) {
-    super(elementRef);
+  public ngOnChanges(): void {
+    this.setSky();
   }
 
-  public ngAfterContentInit(): void {
-    this.subscriptions.add(
-      this.timeService.now$.pipe(map(time => time.getTime())).subscribe(now => {
-        if (!this.twilightBegin || !this.sunrise || !this.noon || !this.sunset || !this.twilightEnd) {
-          return;
-        }
-        const twilightBegin = this.twilightBegin.getTime();
-        const sunrise = this.sunrise.getTime();
-        const noon = this.noon.getTime();
-        const sunset = this.sunset.getTime();
-        const twilightEnd = this.twilightEnd.getTime();
+  private setSky(): void {
+    if (!this.twilightBegin || !this.sunrise || !this.noon || !this.sunset || !this.twilightEnd || !this.time) {
+      return;
+    }
 
-        this.setNightSkyOpacity(now, twilightBegin, sunrise, sunset, twilightEnd);
-        this.setSunriseSkyOpacity(now, twilightBegin, sunrise, noon, sunset, twilightEnd);
-        this.setDaySkyOpacity(now, twilightBegin, noon, twilightEnd);
-      })
-    );
+    const time = this.time.getTime();
+    const twilightBegin = this.twilightBegin.getTime();
+    const sunrise = this.sunrise.getTime();
+    const noon = this.noon.getTime();
+    const sunset = this.sunset.getTime();
+    const twilightEnd = this.twilightEnd.getTime();
+
+    this.setNightSkyOpacity(time, twilightBegin, sunrise, sunset, twilightEnd);
+    this.setSunriseSkyOpacity(time, twilightBegin, sunrise, noon, sunset, twilightEnd);
+    this.setDaySkyOpacity(time, twilightBegin, noon, twilightEnd);
   }
 
   private setNightSkyOpacity(time: number, twilightBegin: number, sunrise: number, sunset: number, twilightEnd: number): void {

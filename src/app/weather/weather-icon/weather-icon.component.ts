@@ -1,5 +1,5 @@
 import { Component, Input, OnChanges, OnInit, SimpleChanges, ViewEncapsulation } from '@angular/core';
-import { isEqual, isNullOrUndefined } from '@qntm-code/utils';
+import { isNullOrUndefined } from '@qntm-code/utils';
 import { AnimatedWeatherIcon, AnimatedWeatherTimes, AnimatedWeatherTypes } from 'animated-weather-icon';
 import { combineLatest, distinctUntilChanged, ReplaySubject } from 'rxjs';
 import { IsVisbileComponentAbstract } from '../../abstracts';
@@ -29,15 +29,17 @@ export class WeatherIconComponent extends IsVisbileComponentAbstract implements 
   public override ngOnInit(): void {
     super.ngOnInit();
 
-    combineLatest([this.iconParams$, this.visible$])
-      .pipe(distinctUntilChanged((a, b) => isEqual(a, b)))
-      .subscribe(([{ type, time }, visible]) => {
-        if (visible) {
-          this.icon?.setType(type, time);
-        } else {
-          this.icon?.unsetIcon(true);
-        }
-      });
+    this.subscriptions.add(
+      combineLatest([this.iconParams$, this.visible$])
+        .pipe(distinctUntilChanged())
+        .subscribe(([{ type, time }, visible]) => {
+          if (visible) {
+            this.icon?.setType(type, time);
+          } else {
+            this.icon?.unsetIcon(true);
+          }
+        })
+    );
   }
 
   public ngOnChanges(changes: SimpleChanges): void {
@@ -56,7 +58,10 @@ export class WeatherIconComponent extends IsVisbileComponentAbstract implements 
       this.icon = new AnimatedWeatherIcon(this.elementRef.nativeElement);
     }
 
-    this.iconParams$.next({ type: weatherCodeToAnimatedWeatherType(this.weatherCode || 0), time: this.iconTime });
+    this.iconParams$.next({
+      type: weatherCodeToAnimatedWeatherType(this.weatherCode || 0),
+      time: this.iconTime,
+    });
   }
 
   private get iconTime(): AnimatedWeatherTimes {

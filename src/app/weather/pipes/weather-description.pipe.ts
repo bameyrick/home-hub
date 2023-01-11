@@ -1,11 +1,12 @@
 import { Pipe, PipeTransform } from '@angular/core';
+import { isNullOrUndefined } from '@qntm-code/utils';
 
 @Pipe({
   name: 'weatherDescription',
 })
 export class WeatherDescriptionPipe implements PipeTransform {
   public transform(code?: number, sunrise?: Date, sunset?: Date, time?: Date | null): string {
-    if (!code || !sunrise || !sunset || !time) {
+    if (isNullOrUndefined(code) || !sunrise || !sunset || !time) {
       return '';
     }
 

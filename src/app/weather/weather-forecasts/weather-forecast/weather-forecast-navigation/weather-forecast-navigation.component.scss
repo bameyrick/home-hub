@@ -5,8 +5,11 @@
 }
 
 .WeatherDay {
+  display: flex;
+  flex-direction: column;
   flex-grow: 1;
   flex-shrink: 0;
+  justify-content: space-between;
   padding: 0.6rem;
   border: 1px solid $colour-concrete;
   background: $colour-alabaster;
@@ -30,7 +33,7 @@
   }
 
   &__date {
-    font-size: 0.64rem;
+    font-size: 0.6rem;
     font-weight: bold;
   }
 
@@ -60,12 +63,9 @@
     font-size: 1.1em;
   }
 
-  &__summary {
-    text-align: center;
-  }
-
   &__icon {
     display: inline-block;
+    align-self: center;
     font-size: 2rem;
   }
 }

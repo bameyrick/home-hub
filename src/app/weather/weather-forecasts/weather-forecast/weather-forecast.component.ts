@@ -56,15 +56,17 @@ export class WeatherForecastComponent extends ComponentAbstract implements After
 
       element.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'start' });
 
-      this.scrollFinishSubscription = this.scrollEvents
-        ?.pipe(
-          filter(() => this.scrollingToDay),
-          debounceTime(100)
-        )
-        .subscribe(() => {
-          this.scrollingToDay = false;
-          this.scrollFinishSubscription?.unsubscribe();
-        });
+      this.subscriptions.add(
+        (this.scrollFinishSubscription = this.scrollEvents
+          ?.pipe(
+            filter(() => this.scrollingToDay),
+            debounceTime(100)
+          )
+          .subscribe(() => {
+            this.scrollingToDay = false;
+            this.scrollFinishSubscription?.unsubscribe();
+          }))
+      );
     }
   }
 

@@ -21,11 +21,13 @@ export class CompassComponent extends IsVisbileComponentAbstract implements OnIn
   public override ngOnInit(): void {
     super.ngOnInit();
 
-    combineLatest([this.direction$, this.visible$]).subscribe(([direction, visible]) => {
-      if (visible) {
-        this.transform = `rotate(${direction}deg)`;
-      }
-    });
+    this.subscriptions.add(
+      combineLatest([this.direction$, this.visible$]).subscribe(([direction, visible]) => {
+        if (visible) {
+          this.transform = `rotate(${direction}deg)`;
+        }
+      })
+    );
   }
 
   public ngOnChanges(): void {
