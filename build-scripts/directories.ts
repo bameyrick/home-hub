@@ -1,4 +1,5 @@
 export const DIST_DIR = `dist`;
+export const DIST_ZIP = `dist.zip`;
 export const ASSETS_DIR = `src/assets`;
 export const ENUMS_DIR = `src/app/enums`;
 export const SVG_SOURCE_DIR = `svg`;

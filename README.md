@@ -17,3 +17,11 @@ Run `npx nx connect-to-nx-cloud` to enable [remote caching](https://nx.app) and 
 ## Further help
 
 Visit the [Nx Documentation](https://nx.dev) to learn more.
+
+## Deploy
+
+- Run `npm run build`
+- Run `scp dist.zip package.json package-lock.json pi@<ip>:home-hub`
+- Enter password
+- SSH into pi
+- Run `cd home-hub && npm i && unzip dist.zip && rm -rf dist.zip && sudo reboot`
