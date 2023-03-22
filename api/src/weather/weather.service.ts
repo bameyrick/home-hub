@@ -1,7 +1,7 @@
 import { ForecastedHour, ForecastLocation, LatLon, MetOfficeCredentials, SunriseSunset } from '@home-hub/common';
 import { HttpService } from '@nestjs/axios';
 import { Injectable, Logger } from '@nestjs/common';
-import { convertTimeUnit, getStartOfDay, isEmpty, isEqual, isNullOrUndefined, TimeUnit, unitToMS } from '@qntm-code/utils';
+import { convertTimeUnit, getEndOfDay, isEmpty, isEqual, isNullOrUndefined, isSameDate, TimeUnit, unitToMS } from '@qntm-code/utils';
 import {
   BehaviorSubject,
   catchError,
@@ -95,7 +95,7 @@ export class WeatherService {
           Array.from(
             new Set(
               [...hourly.properties.timeSeries, ...threeHourly.properties.timeSeries].map(hour =>
-                getStartOfDay(new Date(hour.time)).toISOString()
+                getEndOfDay(new Date(hour.time)).toISOString()
               )
             )
           ).map(time => this.getSunriseSunsetForLocation(location, new Date(time)))
@@ -116,9 +116,7 @@ export class WeatherService {
 
   private mapHourlyForcasts(hourly: MetOfficeFeature, sunriseSunsets: SunriseSunset[]): Array<ForecastedHour> {
     return (hourly.properties.timeSeries as MetOfficeHourlyTimeSeriesItem[]).map(hour => {
-      const sunriseSunset = sunriseSunsets.find(
-        sunriseSunset => getStartOfDay(sunriseSunset.sunrise).getTime() === getStartOfDay(new Date(hour.time)).getTime()
-      );
+      const sunriseSunset = sunriseSunsets.find(sunriseSunset => isSameDate(sunriseSunset.sunrise, new Date(hour.time), TimeUnit.Day));
 
       if (!sunriseSunset) {
         throw new Error(`Could not find sunrise/sunset for hour: ${hour.time}`);
@@ -187,6 +185,7 @@ export class WeatherService {
       )
       .pipe(
         retry({ delay: unitToMS(1, TimeUnit.Minutes), count: 10 }),
+
         map(({ data }) => ({
           sunrise: new Date(data.results.sunrise),
           sunset: new Date(data.results.sunset),

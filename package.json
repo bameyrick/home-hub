@@ -44,7 +44,7 @@
     "@ngrx/router-store": "^15.1.0",
     "@ngrx/store": "^15.1.0",
     "@nrwl/angular": "15.3.3",
-    "@qntm-code/utils": "^2.8.1",
+    "@qntm-code/utils": "^2.13.0",
     "@types/ical": "^0.8.0",
     "animated-weather-icon": "^1.2.0",
     "ical": "^0.8.0",
