@@ -1,19 +1,22 @@
-import { NgModule } from '@angular/core';
+import { DialogModule } from '@angular/cdk/dialog';
+import { ErrorHandler, NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { EffectsModule } from '@ngrx/effects';
 import { StoreRouterConnectingModule } from '@ngrx/router-store';
 import { StoreModule } from '@ngrx/store';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
+import { SocketIoModule } from 'ngx-socket-io';
 import { environment } from '../environments/environment';
 
 import { BaseModule } from './base.module';
 
-import { SocketIoModule } from 'ngx-socket-io';
 import { AppComponent } from './app.component';
+import { ErrorDialogComponent } from './error-dialog.component';
+import { GlobalErrorHandler } from './global-error-handler';
 import { ROOT_REDUCERS, RoutingModule } from './routing';
 
 @NgModule({
-  declarations: [AppComponent],
+  declarations: [AppComponent, ErrorDialogComponent],
   imports: [
     BrowserModule,
     BaseModule,
@@ -29,8 +32,14 @@ import { ROOT_REDUCERS, RoutingModule } from './routing';
     SocketIoModule.forRoot({
       url: `${location.hostname}:${environment.port}`,
     }),
+    DialogModule,
   ],
-  providers: [],
+  providers: [
+    {
+      provide: ErrorHandler,
+      useClass: GlobalErrorHandler,
+    },
+  ],
   bootstrap: [AppComponent],
 })
 export class AppModule {}

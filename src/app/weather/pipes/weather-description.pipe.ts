@@ -10,8 +10,6 @@ export class WeatherDescriptionPipe implements PipeTransform {
       return '';
     }
 
-    console.log(code);
-
     const isDay = time > sunrise && time < sunset;
 
     switch (code) {

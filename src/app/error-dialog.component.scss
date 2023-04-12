@@ -1,0 +1,16 @@
+@use 'sass:color';
+@import '@angular/cdk/overlay-prebuilt.css';
+@import '../styles/variables-and-helpers';
+
+.ErrorDialog {
+  display: block;
+  padding: $page-padding;
+  background: $colour-white;
+
+  &__pre {
+    padding: 1em;
+    overflow: auto;
+    background: color.adjust($colour-red, $lightness: 30%);
+    color: color.adjust($colour-red, $lightness: -10%);
+  }
+}
