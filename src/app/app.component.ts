@@ -3,7 +3,7 @@ import { Component, ElementRef, ViewEncapsulation } from '@angular/core';
 import { isEqual } from '@qntm-code/utils';
 import { delay, distinctUntilChanged } from 'rxjs';
 import { ComponentAbstract } from './abstracts';
-import { ErrorDialogComponent } from './error-dialog.component';
+import { ErrorDialogComponent } from './error-dialog/error-dialog.component';
 import { GlobalErrorEmitter } from './global-error-handler';
 
 @Component({
@@ -27,7 +27,6 @@ export class AppComponent extends ComponentAbstract {
         .subscribe(error => {
           this.dialog.open<string>(ErrorDialogComponent, {
             width: '90%',
-            disableClose: true,
             data: { error },
           });
         })

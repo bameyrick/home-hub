@@ -1,6 +1,6 @@
 import { DIALOG_DATA, DialogRef } from '@angular/cdk/dialog';
 import { Component, ElementRef, Inject, ViewEncapsulation } from '@angular/core';
-import { ComponentAbstract } from './abstracts';
+import { ComponentAbstract } from '../abstracts';
 
 export interface ErrorDialogData {
   error: Error;

@@ -1,6 +1,6 @@
 @use 'sass:color';
 @import '@angular/cdk/overlay-prebuilt.css';
-@import '../styles/variables-and-helpers';
+@import '../../styles/variables-and-helpers';
 
 .ErrorDialog {
   display: block;

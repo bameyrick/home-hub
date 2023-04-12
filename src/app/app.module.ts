@@ -11,7 +11,7 @@ import { environment } from '../environments/environment';
 import { BaseModule } from './base.module';
 
 import { AppComponent } from './app.component';
-import { ErrorDialogComponent } from './error-dialog.component';
+import { ErrorDialogComponent } from './error-dialog/error-dialog.component';
 import { GlobalErrorHandler } from './global-error-handler';
 import { ROOT_REDUCERS, RoutingModule } from './routing';
 
