@@ -24,4 +24,4 @@ Visit the [Nx Documentation](https://nx.dev) to learn more.
 - Run `scp dist.zip package.json package-lock.json pi@<ip>:home-hub`
 - Enter password
 - SSH into pi
-- Run `cd home-hub && npm i && unzip dist.zip && rm -rf dist.zip && sudo reboot`
+- Run `cd home-hub && rm -rf dist && npm i && unzip dist.zip && rm -rf dist.zip && sudo reboot`
