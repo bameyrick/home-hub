@@ -185,12 +185,11 @@ export class WeatherService {
       )
       .pipe(
         retry({ delay: unitToMS(1, TimeUnit.Minutes), count: 10 }),
-
         map(({ data }) => ({
           sunrise: new Date(data.results.sunrise),
           sunset: new Date(data.results.sunset),
-          twilightBegin: new Date(data.results.astronomical_twilight_begin),
-          twilightEnd: new Date(data.results.astronomical_twilight_end),
+          twilightBegin: new Date(data.results.nautical_twilight_begin),
+          twilightEnd: new Date(data.results.nautical_twilight_end),
           noon: new Date(data.results.solar_noon),
         }))
       );
