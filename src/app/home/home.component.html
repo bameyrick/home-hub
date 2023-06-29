@@ -7,7 +7,9 @@
       <h1 class="Home__time">{{ timeService.now$ | async | date : 'HH:mm:ss' }}</h1>
     </div>
 
-    <home-hub-todays-events></home-hub-todays-events>
+    <home-hub-todays-events class="Home__events"></home-hub-todays-events>
+
+    <home-hub-home-data></home-hub-home-data>
   </div>
 
   <footer class="Home__footer">

@@ -1,4 +1,4 @@
-import { CalDavCredentials, MetOfficeCredentials, NullableLatLon } from '@home-hub/common';
+import { CalDavCredentials, HomeData, MetOfficeCredentials, NullableLatLon } from '@home-hub/common';
 import { Injectable } from '@nestjs/common';
 import { existsSync, readFileSync, writeFileSync } from 'fs';
 import { BehaviorSubject, combineLatest, skip } from 'rxjs';
@@ -12,6 +12,8 @@ export class DatabasePersistenceService {
   public readonly weatherLocations$ = new BehaviorSubject<Array<NullableLatLon>>([{ latitude: null, longitude: null }]);
 
   public readonly caldavCredentials$ = new BehaviorSubject<CalDavCredentials | null>(null);
+
+  public readonly homeData$ = new BehaviorSubject<HomeData | null>(null);
 
   constructor() {
     if (existsSync(this.fileName)) {

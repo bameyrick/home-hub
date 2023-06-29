@@ -5,7 +5,8 @@
 
   &__grid {
     display: grid;
-    grid-template-columns: repeat(2, 1fr);
+    grid-gap: 0.8em;
+    grid-template-columns: 1fr 2fr 1fr 2fr 1fr 2fr;
   }
 
   &__row:not(:last-of-type) & {
@@ -37,5 +38,9 @@
 
   &__wind {
     width: 1.5em;
+  }
+
+  &__humidity {
+    font-size: 1.2em;
   }
 }

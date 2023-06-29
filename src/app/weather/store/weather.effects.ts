@@ -1,9 +1,11 @@
 import { Injectable } from '@angular/core';
-import { ForecastedHour, ForecastLocation } from '@home-hub/common';
+import { ForecastedHour, ForecastLocation, HomeData } from '@home-hub/common';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { Store } from '@ngrx/store';
 import { getEndOfDay, getStartOfDay, getStartOfHour, getStartOfMinute, isEqual } from '@qntm-code/utils';
 import { filter, map, switchMap, withLatestFrom } from 'rxjs';
+import { HomeDataActions } from '../../home-data/store';
+import { selectHomeData } from '../../home-data/store/home-data.selectors';
 import { weatherCodeToAnimatedWeatherType } from '../helpers';
 import { CurrentWeather, WeatherForecastDay, WeatherForecastDays, WeatherForecastLocation } from '../models';
 import { WeatherActions } from './weather.actions';
@@ -33,10 +35,11 @@ export class WeatherEffects {
 
   public readonly generateCurrentWeather$ = createEffect(() =>
     this.actions$.pipe(
-      ofType(WeatherActions.weatherUpdated, WeatherActions.generateCurrentWeather),
+      ofType(WeatherActions.weatherUpdated, WeatherActions.generateCurrentWeather, HomeDataActions.homeDataUpdated),
       switchMap(() =>
         this.store.select(selectFirstWeatherLocation).pipe(
-          map(location => this.createCurrentWeather(location)),
+          withLatestFrom(this.store.select(selectHomeData)),
+          map(([location, homeData]) => this.createCurrentWeather(location, homeData)),
           withLatestFrom(this.store.select(selectCurrentWeather)),
           filter(([a, b]) => !isEqual(a, b)),
           map(([currentWeather]) => WeatherActions.currentWeatherGenerated({ currentWeather }))
@@ -45,7 +48,7 @@ export class WeatherEffects {
     )
   );
 
-  private createCurrentWeather(location?: ForecastLocation): CurrentWeather | undefined {
+  private createCurrentWeather(location?: ForecastLocation, homeData?: HomeData): CurrentWeather | undefined {
     const now = getStartOfMinute();
     const hour = location?.hourly.find(hour => isEqual(getStartOfHour(hour.time), getStartOfHour(now)));
 
@@ -60,6 +63,8 @@ export class WeatherEffects {
             twilightEnd: hour.twilightEnd,
             updated: location.modelRunDate,
             name: location.locationName,
+            temperature: homeData?.outsideTemp ?? hour.temperature,
+            humidity: homeData?.outsideHumidity ?? hour.humidity,
           }
         : undefined;
 

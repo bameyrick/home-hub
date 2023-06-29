@@ -16,7 +16,10 @@
   }
 
   &__today {
-    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    padding-bottom: $page-padding;
+    height: calc(100vh - #{$page-padding});
   }
 
   &__clock {
@@ -31,6 +34,10 @@
 
   &__time {
     font-size: 85px;
+  }
+
+  &__events {
+    flex: 1 1 auto;
   }
 
   &__footer {

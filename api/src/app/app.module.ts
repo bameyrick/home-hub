@@ -5,6 +5,7 @@ import { CalDavModule } from '../caldav/caldav.module';
 import { SettingsModule } from '../settings/settings.module';
 import { WeatherModule } from '../weather/weather.module';
 
+import { HomeDataModule } from '../home-data/home-data.module';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { SocketGateway } from './socket.gateway';
@@ -17,6 +18,7 @@ import { SocketGateway } from './socket.gateway';
     SettingsModule,
     WeatherModule,
     CalDavModule,
+    HomeDataModule,
   ],
   controllers: [AppController],
   providers: [AppService, SocketGateway],

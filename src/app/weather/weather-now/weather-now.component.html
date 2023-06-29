@@ -1,46 +1,39 @@
 <h2>Weather now</h2>
 <div class="WeatherNow__grid">
-  <table>
-    <tr class="WeatherNow__row">
-      <td class="WeatherNow__cell">
-        <div class="WeatherNow__icon">°C</div>
-      </td>
-      <td class="WeatherNow__cell">
-        <p class="WeatherNow__label">Feels like</p>
-        <p>{{ (currentWeather$ | async)?.feelsLikeTemperature | number : '1.0-0' }}°</p>
-      </td>
-    </tr>
-    <tr class="WeatherNow__row">
-      <td class="WeatherNow__cell">
-        <div class="WeatherNow__icon">
-          <home-hub-compass class="WeatherNow__compass" [direction]="(currentWeather$ | async)?.windDirection"></home-hub-compass>
-        </div>
-      </td>
-      <td class="WeatherNow__cell">
-        <p class="WeatherNow__label">Wind</p>
-        <p>{{ (currentWeather$ | async)?.windSpeed | number : '1.0-0' }} mph</p>
-      </td>
-    </tr>
-  </table>
+  <div class="WeatherNow__icon">°C</div>
 
-  <table>
-    <tr class="WeatherNow__row">
-      <td class="WeatherNow__cell">
-        <div class="WeatherNow__icon">UV</div>
-      </td>
-      <td class="WeatherNow__cell">
-        <p class="WeatherNow__label">UV Index</p>
-        <p>{{ (currentWeather$ | async)?.uvIndex === 0 ? '-' : (currentWeather$ | async)?.uvIndex }}</p>
-      </td>
-    </tr>
-    <tr class="WeatherNow__row">
-      <td class="WeatherNow__cell">
-        <div class="WeatherNow__icon" [icon]="Icon.Wind" [iconClass]="'WeatherNow__wind'"></div>
-      </td>
-      <td class="WeatherNow__cell">
-        <p class="WeatherNow__label">Wind Gust</p>
-        <p>{{ (currentWeather$ | async)?.windGust | number : '1.0-0' }} mph</p>
-      </td>
-    </tr>
-  </table>
+  <div class="WeatherNow__cell">
+    <p class="WeatherNow__label">Feels like</p>
+    <p>{{ (currentWeather$ | async)?.feelsLikeTemperature | number : '1.0-0' }}°</p>
+  </div>
+
+  <div class="WeatherNow__icon">UV</div>
+
+  <div class="WeatherNow__cell">
+    <p class="WeatherNow__label">UV Index</p>
+    <p>{{ (currentWeather$ | async)?.uvIndex === 0 ? '-' : (currentWeather$ | async)?.uvIndex }}</p>
+  </div>
+
+  <div class="WeatherNow__icon" [icon]="Icon.Humidity" [iconClass]="'WeatherNow__humidity'"></div>
+
+  <div class="WeatherNow__cell">
+    <p class="WeatherNow__label">Humidity</p>
+    <p>{{ (currentWeather$ | async)?.humidity | number : '1.0-0' }}%</p>
+  </div>
+
+  <div class="WeatherNow__icon">
+    <home-hub-compass class="WeatherNow__compass" [direction]="(currentWeather$ | async)?.windDirection"></home-hub-compass>
+  </div>
+
+  <div class="WeatherNow__cell">
+    <p class="WeatherNow__label">Wind</p>
+    <p>{{ (currentWeather$ | async)?.windSpeed | number : '1.0-0' }} mph</p>
+  </div>
+
+  <div class="WeatherNow__icon" [icon]="Icon.Wind" [iconClass]="'WeatherNow__wind'"></div>
+
+  <div class="WeatherNow__cell">
+    <p class="WeatherNow__label">Gust</p>
+    <p>{{ (currentWeather$ | async)?.windGust | number : '1.0-0' }} mph</p>
+  </div>
 </div>

@@ -1,0 +1,27 @@
+<div
+  class="HomeData__item"
+  [style]="{ background: (data$ | async)?.heatingOn ? Colour.yellow : null }"
+  [icon]="Icon.Boiler"
+  [iconClass]="'HomeData__icon HomeData__boiler'"
+>
+  <span class="HomeData__value HomeData__heat-target">{{ ((data$ | async)?.heatingTarget | number : '1.0-0') ?? '-' }}°c</span>
+</div>
+
+<div class="HomeData__item" [icon]="Icon.HouseFloors" [iconClass]="'HomeData__icon HomeData__house'">
+  <span class="HomeData__value HomeData__downstairs">{{ ((data$ | async)?.downstairsTemp | number : '1.0-0') ?? '-' }}°c</span>
+  <span class="HomeData__value HomeData__upstairs">{{ ((data$ | async)?.upstairsTemp | number : '1.0-0') ?? '-' }}°c</span>
+</div>
+
+<div class="HomeData__item" [icon]="Icon.HouseFloors" [iconClass]="'HomeData__icon HomeData__house'">
+  <span class="HomeData__value HomeData__downstairs">{{ (data$ | async)?.downstairsHumidity ?? '-' }}%</span>
+  <span class="HomeData__value HomeData__upstairs">{{ (data$ | async)?.upstairsHumidity ?? '-' }}%</span>
+</div>
+
+<div
+  class="HomeData__item"
+  [class]="'HomeData__air-colour--' + (data$ | async)?.airQuality"
+  [icon]="Icon.AirQuality"
+  [iconClass]="'HomeData__icon HomeData__air'"
+>
+  <span class="HomeData__value"></span>
+</div>
