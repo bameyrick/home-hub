@@ -2,7 +2,7 @@ import { Component, ElementRef, ViewEncapsulation } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { ComponentAbstract } from '../abstracts';
 import { Colour } from '../enums';
-import { selectHomeData } from './store/home-data.selectors';
+import { selectHomeData, selectMaxIndoorTemperature } from './store/home-data.selectors';
 
 @Component({
   selector: 'home-hub-home-data',
@@ -14,6 +14,8 @@ export class HomeDataComponent extends ComponentAbstract {
   protected readonly baseClassName = 'HomeData';
 
   public readonly data$ = this.store.select(selectHomeData);
+
+  public readonly maxIndoorTemperature$ = this.store.select(selectMaxIndoorTemperature);
 
   public readonly Colour = Colour;
 

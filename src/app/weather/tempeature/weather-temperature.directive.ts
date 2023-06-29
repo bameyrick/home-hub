@@ -7,7 +7,7 @@ import { mixColours } from '../helpers';
   selector: '[temperature]',
 })
 export class WeatherTemperatureDirective implements OnChanges {
-  @Input() public temperature?: number;
+  @Input() public temperature?: number | null;
 
   constructor(private readonly elementRef: ElementRef) {}
 
