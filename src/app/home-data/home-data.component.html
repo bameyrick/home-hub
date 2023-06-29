@@ -4,7 +4,7 @@
   [icon]="Icon.Boiler"
   [iconClass]="'HomeData__icon HomeData__boiler'"
 >
-  <span class="HomeData__value HomeData__heat-target">{{ ((data$ | async)?.heatingTarget | number : '1.0-0') ?? '-' }}°c</span>
+  <span class="HomeData__value HomeData__heat-target">{{ ((data$ | async)?.heatingTarget | number : '1.0-1') ?? '-' }}°</span>
 </div>
 
 <div
@@ -13,8 +13,8 @@
   [iconClass]="'HomeData__icon HomeData__house'"
   [temperature]="maxIndoorTemperature$ | async"
 >
-  <span class="HomeData__value HomeData__downstairs">{{ ((data$ | async)?.downstairsTemp | number : '1.0-0') ?? '-' }}°c</span>
-  <span class="HomeData__value HomeData__upstairs">{{ ((data$ | async)?.upstairsTemp | number : '1.0-0') ?? '-' }}°c</span>
+  <span class="HomeData__value HomeData__downstairs">{{ ((data$ | async)?.downstairsTemp | number : '1.0-1') ?? '-' }}°</span>
+  <span class="HomeData__value HomeData__upstairs">{{ ((data$ | async)?.upstairsTemp | number : '1.0-1') ?? '-' }}°</span>
 </div>
 
 <div class="HomeData__item" [icon]="Icon.HouseFloors" [iconClass]="'HomeData__icon HomeData__house'">

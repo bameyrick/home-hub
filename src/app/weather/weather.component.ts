@@ -17,6 +17,10 @@ export class WeatherComponent extends ComponentAbstract {
 
   public readonly currentWeather$ = this.store.select(selectCurrentWeather);
 
+  public readonly decimalReplace = /\.[\d]+/;
+
+  public readonly integerReplace = /[\d]+\./;
+
   @HostListener('click') public readonly onClick = () => this.router.navigateByUrl(AppRoute.Forecasts);
 
   constructor(

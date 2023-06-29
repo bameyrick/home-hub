@@ -21,7 +21,13 @@
 
   <div class="Weather__summary">
     <div class="Weather__summary-left">
-      <h3 class="Weather__temperature">{{ (currentWeather$ | async)?.temperature | number : '1.0-0' }}°</h3>
+      <h3 class="Weather__temperature">
+        <span>{{ (currentWeather$ | async)?.temperature | number : '1.0-1' | replace : decimalReplace : '' }}</span>
+        <span class="Weather__temperature-decimal">{{
+          (currentWeather$ | async)?.temperature | number : '1.0-1' | replace : integerReplace : '.'
+        }}</span
+        >°
+      </h3>
       <h4 class="Weather__description">
         {{
           (currentWeather$ | async)?.weatherCode

@@ -34,19 +34,21 @@
     position: absolute;
     left: 50%;
     transform: translateX(-50%);
-    font-size: 0.15em;
+    font-size: 0.18em;
   }
 
   &__upstairs {
-    top: 2.3em;
+    top: 1.85em;
   }
 
   &__downstairs {
-    bottom: 1.61em;
+    bottom: 1.2em;
   }
 
   &__heat-target {
-    top: 2.1em;
+    top: 1.7em;
+    border-radius: 0.25em;
+    background: inherit;
   }
 
   &__air-colour {
