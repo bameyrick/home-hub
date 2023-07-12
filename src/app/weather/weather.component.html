@@ -23,9 +23,10 @@
     <div class="Weather__summary-left">
       <h3 class="Weather__temperature">
         <span>{{ (currentWeather$ | async)?.temperature | number : '1.0-1' | replace : decimalReplace : '' }}</span>
-        <span class="Weather__temperature-decimal">{{
-          (currentWeather$ | async)?.temperature | number : '1.0-1' | replace : integerReplace : '.'
-        }}</span
+        <span
+          *ngIf="((currentWeather$ | async)?.temperature | number : '1.0-1')?.toString()?.includes('.')"
+          class="Weather__temperature-decimal"
+          >{{ (currentWeather$ | async)?.temperature | number : '1.0-1' | replace : integerReplace : '.' }}</span
         >°
       </h3>
       <h4 class="Weather__description">
